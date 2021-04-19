@@ -8,22 +8,19 @@
  *
  */
 public class User {
+	static final String DEFAULT_NAME = "<NO_NAME>";
 	String name;
+	static final int DEFAULT_NUM_MOVIES = 5;
 	int numMovies = 5;
 	int[] ratings = new int [numMovies];
 	
 	/**
-	 * Default constructor
-	 * @param name is initialized to <NO_NAME> as a stub
-	 * @param ratings is initialized to -1 as a stub 
+	 * Default constructor (chained constructor)
+	 * @see Parameterized constructor with one argument of String name 
 	 */
 	public User()
 	{
-		this.SetName("<NO_NAME>");
-		for(int i=0; i < this.GetNumMovies(); ++i)
-		{
-			this.SetSingleRating(i, -1);
-		}
+		this(DEFAULT_NAME);
 	}
 	
 	/**
@@ -34,10 +31,8 @@ public class User {
 	public User(String name)
 	{
 		this.SetName(name);
-		for(int i=0; i < this.GetNumMovies(); ++i)
-		{
-			this.SetSingleRating(i, -1);
-		}
+		this.SetNumMovies(DEFAULT_NUM_MOVIES);
+		this.DefineRatings();
 	}
 	
 	/**
@@ -48,7 +43,29 @@ public class User {
 	public User(String name, int[] ratings)
 	{
 		this.SetName(name);
+		this.SetNumMovies(ratings.length);
 		this.SetRatings(ratings);
+	}
+	
+	/**
+	 * Defines the ratings array to the size of movies
+	 * Initializes the ratings to a standardized score
+	 */
+	private void DefineRatings()
+	{
+		this.ratings = new int [this.GetNumMovies()];
+		this.SetInitialRatings();
+	}
+	
+	/**
+	 * Initializes all of the moves to a standardized scored of -1
+	 */
+	private void SetInitialRatings()
+	{
+		for(int i=0; i < this.GetNumMovies(); ++i)
+		{
+			this.SetSingleRating(i, -1);
+		}
 	}
 	
 	/**
