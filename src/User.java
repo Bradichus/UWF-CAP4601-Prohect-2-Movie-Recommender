@@ -13,6 +13,7 @@ public class User {
 	static final int DEFAULT_NUM_MOVIES = 10;
 	double[] ratings = new double [DEFAULT_NUM_MOVIES];
 	double[] avgRatingsMinusMean = new double [DEFAULT_NUM_MOVIES];
+	boolean[] hasRatedMovie = new boolean [DEFAULT_NUM_MOVIES];
 	
 	/**
 	 * Default constructor (chained constructor)
@@ -34,6 +35,7 @@ public class User {
 		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
 			this.ratings[i] = 0.0;
+			this.hasRatedMovie[i] = false;
 		}
 	}
 	
@@ -48,6 +50,14 @@ public class User {
 		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
 			this.ratings[i] = ratings[i];
+			if(ratings[i] != 0.0)
+			{
+				this.hasRatedMovie[i] = true;
+			}
+			else
+			{
+				this.hasRatedMovie[i] = false;
+			}
 		}
 	}
 	
@@ -133,5 +143,10 @@ public class User {
 	double[] GetAvgRatingsMinusMean()
 	{
 		return this.avgRatingsMinusMean;
+	}
+	
+	boolean[] GetHasRatedMovie()
+	{
+		return this.hasRatedMovie;
 	}
 }
