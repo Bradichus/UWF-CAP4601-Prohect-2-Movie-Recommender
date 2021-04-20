@@ -11,7 +11,8 @@ public class User {
 	static final String DEFAULT_NAME = "<NO_NAME>";
 	String name;
 	static final int DEFAULT_NUM_MOVIES = 10;
-	int[] ratings = new int [DEFAULT_NUM_MOVIES];
+	double[] ratings = new double [DEFAULT_NUM_MOVIES];
+	double[] avgRatingsMinusMean = new double [DEFAULT_NUM_MOVIES];
 	
 	/**
 	 * Default constructor (chained constructor)
@@ -32,7 +33,7 @@ public class User {
 		this.SetName(name);
 		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
-			this.ratings[i] = -1;
+			this.ratings[i] = 0.0;
 		}
 	}
 	
@@ -41,13 +42,56 @@ public class User {
 	 * @param name is passed as an argument to SetName 
 	 * @param ratings is passed as an argument to initialize the ratings
 	 */
-	public User(String name, int[] ratings)
+	public User(String name, double[] ratings)
 	{
 		this.SetName(name);
 		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
 			this.ratings[i] = ratings[i];
 		}
+	}
+	
+	public void CalculateAvgRatingsMinusMean()
+	{
+		double average = this.GetAverageRatings();
+		
+		for(int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
+		{
+			if(this.ratings[i] != 0.0)
+			{
+				this.avgRatingsMinusMean[i] = this.ratings[i] - average;
+			}
+			else
+			{
+				this.avgRatingsMinusMean[i] = 0.0;
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double GetAverageRatings()
+	{
+		double sum = 0.0;
+		int count = 0;
+		
+		for(int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
+		{
+			if(this.ratings[i] != 0.0)
+			{
+				sum += this.ratings[i];
+				count++;
+			}
+		}
+		
+		if(count == 0)
+		{
+			return 0.0;
+		}
+		
+		return sum / count;
 	}
 	
 	/**
@@ -72,7 +116,7 @@ public class User {
 	 * Mutator
 	 * @param ratings is the values rated for each movie
 	 */
-	void SetRatings(int[] ratings)
+	void SetRatings(double[] ratings)
 	{
 		this.ratings = ratings;
 	}
@@ -81,8 +125,13 @@ public class User {
 	 * Accessor
 	 * @return the ratings array which is the values rated for each movie
 	 */
-	int[] GetRatings()
+	double[] GetRatings()
 	{
 		return this.ratings;
+	}
+	
+	double[] GetAvgRatingsMinusMean()
+	{
+		return this.avgRatingsMinusMean;
 	}
 }
