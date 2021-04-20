@@ -58,7 +58,7 @@ class testMovie {
 		Movie tm6 = new Movie("Real Movie", 20, 10, 50, 5, t);
 		assertEquals("Real Movie", tm6.getName());
 		assertEquals(20, tm6.getViews());
-		assertEquals(0, tm6.getNumTags());
+		assertEquals(5, tm6.getNumTags());
 		for (int i = 0; i < 5; i++) {
 			assertEquals(t[i], tm6.getTags()[i]);
 		}
@@ -67,7 +67,7 @@ class testMovie {
 		
 		String[] t1 = {"Good", "Not Bad", "Not Great"};
 		Movie tm7 = new Movie("Also Real Movie", 20, 10, 50, 3, t1);
-		assertEquals(0, tm7.getNumTags());
+		assertEquals(3, tm7.getNumTags());
 		for (int i = 0; i < 3; i++) {
 			assertEquals(t1[i], tm7.getTags()[i]);
 		}
@@ -80,6 +80,18 @@ class testMovie {
 		for (int i = 0; i < 5; i++) {
 			assertEquals("", tm8.getTags()[i]);
 		}
+	}
+	
+	@Test
+	void testRatingConstructor() {
+		String[] t = {"Sci-Fi", "Action", "Adventure", "Drama"};
+		Movie tm9 = new Movie("Star Wars: Episode IV - A New Hope", 1000, 500, 92.0, 4, t);
+		assertEquals("Star Wars: Episode IV - A New Hope", tm9.getName());
+		assertEquals(1000, tm9.getViews());
+		assertEquals(500, tm9.getNumReviews());
+		assertEquals(92, tm9.getRating());
+		assertEquals(4, tm9.getNumTags());
+		assertEquals("Sci-Fi", tm9.getTags()[0]);
 	}
 
 }
