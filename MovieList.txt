@@ -2,7 +2,7 @@ Title,numberOfTags,tags,Views,numberOfReviews,Rating
 Star Wars: Episode IV - A New Hope,4,Sci-Fi,Action,Adventure,Drama,1000,500,92
 The Imitation Game,4,Biography,History,Drama,Thriller,750,370,89
 Halloween,4,Horror,Thriller,Slasher,Rated R,900,800,96
-Saw,5,Horror,Thriller,Mystery,Drama,Rated R
+Saw,5,Horror,Thriller,Mystery,Drama,Rated R,700,430,50
 Deadpool,5,Comedy,Action,Super Hero,Romance,Rated R,800,630,85
 The Lego Movie,5,Comedy,Animated,Parody,Adventure,Drama,600,280,96
 Batman Begins,4,Super Hero,Action,Drama,Thriller,870,490,84
