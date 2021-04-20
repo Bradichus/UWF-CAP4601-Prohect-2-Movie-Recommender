@@ -24,7 +24,6 @@ public class CorrelationAgent {
 	 * 
 	 * @return
 	 */
-	
 	public double GetAverageRatingsForUsers()
 	{
 		double sum = 0.0;
@@ -42,6 +41,51 @@ public class CorrelationAgent {
 		}
 		
 		return sum / count;
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public Movie RecommendMovieToUser(User user, int locOfUserInUsersArray)
+	{
+		Movie movie = new Movie();
+		User bestMatchingUser = new User();
+		double max = Integer.MIN_VALUE;
+		double temp = 0.0;
+		
+		for(int i=0; i<users.length; i++)
+		{
+			if(i != locOfUserInUsersArray)
+			{
+				temp = this.CenteredCosineSimilarityBetweenTwoUsers(user, users[i]);
+				if( max < temp)
+				{
+					max = temp;
+					bestMatchingUser = users[i];
+				}
+			}
+		}
+		
+		double highestScore = 0.0;
+		int loc = 0;
+		for(int i=0; i<User.DEFAULT_NUM_MOVIES; i++)
+		{
+			if(user.GetHasRatedMovie()[i] == false)
+			{
+				if(highestScore < bestMatchingUser.GetAvgRatingsMinusMean()[i])
+				{
+					highestScore = bestMatchingUser.GetAvgRatingsMinusMean()[i];
+					loc = i;
+				}
+			}
+		}
+		
+		// return movies[i]
+		
+		
+		return movie;
 	}
 	
 	/**
