@@ -9,15 +9,15 @@ class testUser
 	void testDefaultConstructor()
 	{
 		final String DEFAULT_NAME = "<NO_NAME>";
-		final int numMovies = 5;
+		final int numMovies = 10;
 		final int initialRating = -1;
 		User user = new User();
 		
 		assertEquals(user.GetName(), DEFAULT_NAME);
-		assertEquals(user.GetNumMovies(), numMovies);
-		for(int i=0; i < user.GetNumMovies(); ++i)
+		assertEquals(User.DEFAULT_NUM_MOVIES, numMovies);
+		for(int i=0; i < User.DEFAULT_NUM_MOVIES; ++i)
 		{
-			assertEquals(user.GetSingleRating(i), initialRating);
+			assertEquals(user.ratings[i], initialRating);
 		}
 	}
 	
@@ -30,14 +30,12 @@ class testUser
 		user.SetName(name);
 		assertEquals(user.GetName(), name);
 		
-		final int[] ratings = {0,1,2,3,4};
-		for(int i=0; i < user.GetNumMovies(); ++i)
+		final int[] ratings = {0,1,2,3,4,5,6,7,8,9};
+		for(int i=0; i < User.DEFAULT_NUM_MOVIES; ++i)
 		{
-			user.SetSingleRating(i, ratings[i]);
-			assertEquals(user.GetSingleRating(i), ratings[i]);
+			user.ratings[i] = ratings[i];
+			assertEquals(user.ratings[i], ratings[i]);
 		}
-		
-		
 	}
 	
 	@Test
@@ -53,16 +51,16 @@ class testUser
 	void testFullParameterizedConstructor()
 	{
 		final String name = "Jack";
-		final int numMovies = 5;
-		final int[] ratings = {0,1,2,3,4};
+		final int numMovies = 10;
+		final int[] ratings = {0,1,2,3,4,5,6,7,8,9};
 		
 		User user = new User(name, ratings);
 		
 		assertEquals(user.GetName(), name);
-		assertEquals(user.GetNumMovies(), numMovies);
-		for(int i=0; i < user.GetNumMovies(); ++i)
+		assertEquals(User.DEFAULT_NUM_MOVIES, numMovies);
+		for(int i=0; i < User.DEFAULT_NUM_MOVIES; ++i)
 		{
-			assertEquals(user.GetSingleRating(i), ratings[i]);
+			assertEquals(user.ratings[i], ratings[i]);
 		}
 	}
 	
