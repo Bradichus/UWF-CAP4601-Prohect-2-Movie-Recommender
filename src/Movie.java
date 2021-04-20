@@ -56,8 +56,10 @@ public class Movie {
 			int numTags,  String[] tags)
 	{
 		this.name = name;
+		this.numTags = 0;
 		for (int i = 0; i < numTags; i++) {
 			this.tags[i] = tags[i];
+			this.numTags++;
 		}
 		for (int j = numTags; j < MAX_TAGS; j++) {
 			this.tags[j] = "";
@@ -67,6 +69,23 @@ public class Movie {
 		this.totalUserScore = totalUserScore;
 		this.maxUserScore = this.numReviews * MAX_RATING;
 		rating = calculateRating();
+	}
+	
+	public Movie(String name, int numViews, int numReviews, double rating, int numTags, String[] tags)
+	{
+		this.name = name;
+		this.numTags = 0;
+		for (int i = 0; i < numTags; i++) {
+			this.tags[i] = tags[i];
+			this.numTags++;
+		}
+		for (int j = numTags; j < MAX_TAGS; j++) {
+			this.tags[j] = "";
+		}
+		this.numViews = numViews;
+		this.numReviews = numReviews;
+		this.maxUserScore = this.numReviews * MAX_RATING;
+		this.rating = rating;
 	}
 	
 	public boolean tag(String newTag)
@@ -82,6 +101,7 @@ public class Movie {
 		
 		if (numTags < MAX_TAGS && isNew) {
 			tags[numTags] = newTag;
+			numTags++;
 			success = true;
 		}
 		
@@ -106,8 +126,10 @@ public class Movie {
 			if (tags[i] == oldTag && !success) {
 				for (int j = i; j < MAX_TAGS; j++) 
 				{
-					if (j+1 < MAX_TAGS)
-					tags[j] = tags[j+1];
+					if (j+1 < MAX_TAGS) {
+						tags[j] = tags[j+1];
+						numTags--;
+					}
 				}
 				success = true;
 			}
