@@ -16,22 +16,16 @@ class testCorrelationAgent {
 		 *
 		 * [ x 37 25 10 x 90 x x 75 x x 90 Y x 90 10 ] User 0
 		 * [ x 37 25 10 x 90 x x 75 x x 90 95 x 90 10 ] User 1
-		 * [ x x x x x x x x x x x x x x x x ] User 2
-		 * [ x x x x x x x x x x x x x x x x ] User 3
-		 * [ x x x x x x x x x x x x x x x x ] User 4
-		 * [ x x x x x x x x x x x x x x x x ] User 5
-		 * [ x x x x x x x x x x x x x x x x ] User 6
-		 * [ x x x x x x x x x x x x x x x x ] User 7
-		 * [ x x x x x x x x x x x x x x x x ] User 8
-		 * [ x x x x x x x x x x x x x x x x ] User 9
 		 */
 
 		ArrayList<User> datasetUsers = new ArrayList<User>();
-		int DEFAULT_NUM_USERS = 10;
+		int DEFAULT_NUM_USERS = 2;
 		for(int i=0; i < DEFAULT_NUM_USERS; i++)
 		{
 			datasetUsers.add(new User());
 		}
+		datasetUsers.get(0).SetName("Alice");
+		datasetUsers.get(1).SetName("Bob");
 
 		datasetUsers.get(0).AddRatingToMovie(1, 37);
 		datasetUsers.get(1).AddRatingToMovie(1, 37);
@@ -55,6 +49,13 @@ class testCorrelationAgent {
 		datasetUsers.get(1).AddRatingToMovie(14, 10);
 
 		CorrelationAgent myAgent = new CorrelationAgent(datasetUsers);
+//		for (int i=0; i<2; i++)
+//		{
+//			for(int j=0; j<15; j++)
+//			{
+//				System.out.println("User "+i+" rated movie "+j+" a score of "+myAgent.users.get(i).GetRatings()[j]);
+//			}
+//		}
 		assertEquals("Toy Story", myAgent.RecommendMovieToUser(datasetUsers.get(0), 0));
 
 	}

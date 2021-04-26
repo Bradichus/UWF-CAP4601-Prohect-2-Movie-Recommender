@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class CorrelationAgent {
 	ArrayList<User> users = new ArrayList<User>();
 	MovieDatabase movies = new MovieDatabase();
-	private final int DEFAULT_NUM_USERS = 10;
+	private final int DEFAULT_NUM_USERS = 2;
 	
 	/**
 	 * Default constructor
@@ -45,7 +45,7 @@ public class CorrelationAgent {
 		double max = 0;
 		double temp;
 		
-		for(int i=0; i<10; i++)
+		for(int i=0; i<2; i++)
 		{
 			if(i != locOfUserInUsersArray)
 			{
