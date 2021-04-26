@@ -3,7 +3,7 @@ import java.lang.Math; // Import for Math.sqrt() method
 import java.util.ArrayList;
 
 public class CorrelationAgent {
-	ArrayList<User> users;
+	ArrayList<User> users = new ArrayList<User>();
 	MovieDatabase movies = new MovieDatabase();
 	private final int DEFAULT_NUM_USERS = 10;
 	
@@ -41,16 +41,16 @@ public class CorrelationAgent {
 	 */
 	public String RecommendMovieToUser(User user, int locOfUserInUsersArray)
 	{
-		Movie movie = new Movie();
-		User bestMatchingUser = new User();
-		double max = Integer.MIN_VALUE;
+		User bestMatchingUser = new User("Test user");
+		double max = 0;
 		double temp;
 		
-		for(int i=0; i<users.size(); i++)
+		for(int i=0; i<10; i++)
 		{
 			if(i != locOfUserInUsersArray)
 			{
 				temp = this.CenteredCosineSimilarityBetweenTwoUsers(user, users.get(i));
+				System.out.println("Temp was "+temp);
 				if( max < temp)
 				{
 					max = temp;
@@ -58,10 +58,12 @@ public class CorrelationAgent {
 				}
 			}
 		}
+		System.out.println("Best matching user is "+bestMatchingUser.GetName());
 		
 		double highestScore = 0.0;
 		int loc = 0;
 		for(int i=0; i<User.DEFAULT_NUM_MOVIES; i++) {
+			System.out.println("Highest score is "+highestScore);
 			if (user.GetHasRatedMovie()[i] == false) {
 				if (highestScore < bestMatchingUser.GetAvgRatingsMinusMean()[i]) {
 					highestScore = bestMatchingUser.GetAvgRatingsMinusMean()[i];
@@ -85,6 +87,10 @@ public class CorrelationAgent {
 		double magnitudeX = this.CalculateMagnitudeOfVector(userA);
 		double magnitudeY = this.CalculateMagnitudeOfVector(userB);
 		double crossProductXY = magnitudeX * magnitudeY;
+		
+		System.out.println("Centered cosine is "+ (dotProductXY / crossProductXY));
+		System.out.println("Dot is "+ (dotProductXY));
+		System.out.println("Cross is "+ (crossProductXY));
 		
 		return dotProductXY / crossProductXY;
 	}
