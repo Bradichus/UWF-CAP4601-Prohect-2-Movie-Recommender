@@ -1,46 +1,37 @@
+import java.io.FileNotFoundException;
 import java.lang.Math; // Import for Math.sqrt() method
+import java.util.ArrayList;
 
 public class CorrelationAgent {
-	User[] users;
+	ArrayList<User> users;
+	MovieDatabase movies = new MovieDatabase();
+	private final int DEFAULT_NUM_USERS = 10;
 	
 	/**
 	 * Default constructor
 	 */
-	public CorrelationAgent()
+	public CorrelationAgent() throws FileNotFoundException {
+		this.InitializeUsers();
+	}
+
+	/**
+	 * @implNote Sets up the users list with a default amount
+	 */
+	private void InitializeUsers()
 	{
-		// TODO
+		for(int i=0; i < DEFAULT_NUM_USERS; i++)
+		{
+			this.users.add(new User());
+		}
 	}
 	
 	/**
 	 * 
 	 * @param users
 	 */
-	public CorrelationAgent(User[] users)
+	public CorrelationAgent(ArrayList<User> users) throws FileNotFoundException
 	{
 		this.users = users;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public double GetAverageRatingsForUsers()
-	{
-		double sum = 0.0;
-		int count = 0;
-		
-		for(int i=0; i < users.length; i++)
-		{
-			sum += users[i].GetAverageRatings();
-			count++;
-		}
-		
-		if(users.length == 0)
-		{
-			return 0.0;
-		}
-		
-		return sum / count;
 	}
 	
 	/**
@@ -48,44 +39,38 @@ public class CorrelationAgent {
 	 * @param user
 	 * @return
 	 */
-	public Movie RecommendMovieToUser(User user, int locOfUserInUsersArray)
+	public String RecommendMovieToUser(User user, int locOfUserInUsersArray)
 	{
 		Movie movie = new Movie();
 		User bestMatchingUser = new User();
 		double max = Integer.MIN_VALUE;
-		double temp = 0.0;
+		double temp;
 		
-		for(int i=0; i<users.length; i++)
+		for(int i=0; i<users.size(); i++)
 		{
 			if(i != locOfUserInUsersArray)
 			{
-				temp = this.CenteredCosineSimilarityBetweenTwoUsers(user, users[i]);
+				temp = this.CenteredCosineSimilarityBetweenTwoUsers(user, users.get(i));
 				if( max < temp)
 				{
 					max = temp;
-					bestMatchingUser = users[i];
+					bestMatchingUser = users.get(i);
 				}
 			}
 		}
 		
 		double highestScore = 0.0;
 		int loc = 0;
-		for(int i=0; i<User.DEFAULT_NUM_MOVIES; i++)
-		{
-			if(user.GetHasRatedMovie()[i] == false)
-			{
-				if(highestScore < bestMatchingUser.GetAvgRatingsMinusMean()[i])
-				{
+		for(int i=0; i<User.DEFAULT_NUM_MOVIES; i++) {
+			if (user.GetHasRatedMovie()[i] == false) {
+				if (highestScore < bestMatchingUser.GetAvgRatingsMinusMean()[i]) {
 					highestScore = bestMatchingUser.GetAvgRatingsMinusMean()[i];
 					loc = i;
 				}
 			}
 		}
 		
-		// return movies[i]
-		
-		
-		return movie;
+		return movies.getMovies().get(loc).getName();
 	}
 	
 	/**

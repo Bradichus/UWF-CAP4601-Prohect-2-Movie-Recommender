@@ -10,7 +10,7 @@
 public class User {
 	static final String DEFAULT_NAME = "<NO_NAME>";
 	String name;
-	static final int DEFAULT_NUM_MOVIES = 10;
+	static final int DEFAULT_NUM_MOVIES = 15;
 	double[] ratings = new double [DEFAULT_NUM_MOVIES];
 	double[] avgRatingsMinusMean = new double [DEFAULT_NUM_MOVIES];
 	boolean[] hasRatedMovie = new boolean [DEFAULT_NUM_MOVIES];
@@ -27,7 +27,7 @@ public class User {
 	/**
 	 * One parameterized constructor
 	 * @param name
-	 * @param ratings is initialized to -1 as a stub
+	 * @param ratings is initialized to 0 as a stub
 	 */
 	public User(String name)
 	{
@@ -76,6 +76,12 @@ public class User {
 				this.avgRatingsMinusMean[i] = 0.0;
 			}
 		}
+	}
+
+	public void AddRatingToMovie(int loc, double rating)
+	{
+		this.ratings[loc] = rating;
+		this.hasRatedMovie[loc] = true;
 	}
 	
 	/**
