@@ -19,44 +19,16 @@ class testCorrelationAgent {
 		 */
 
 		ArrayList<User> datasetUsers = new ArrayList<User>();
-		int DEFAULT_NUM_USERS = 2;
-		for(int i=0; i < DEFAULT_NUM_USERS; i++)
-		{
-			datasetUsers.add(new User());
-		}
-		datasetUsers.get(0).SetName("Alice");
-		datasetUsers.get(1).SetName("Bob");
-
-		datasetUsers.get(0).AddRatingToMovie(1, 37);
-		datasetUsers.get(1).AddRatingToMovie(1, 37);
-		datasetUsers.get(0).AddRatingToMovie(2, 25);
-		datasetUsers.get(1).AddRatingToMovie(2, 25);
-		datasetUsers.get(0).AddRatingToMovie(3, 10);
-		datasetUsers.get(1).AddRatingToMovie(3, 10);
-		datasetUsers.get(0).AddRatingToMovie(5, 90);
-		datasetUsers.get(1).AddRatingToMovie(5, 90);
-		datasetUsers.get(0).AddRatingToMovie(8, 75);
-		datasetUsers.get(1).AddRatingToMovie(8, 75);
-		datasetUsers.get(0).AddRatingToMovie(11, 90);
-		datasetUsers.get(1).AddRatingToMovie(11, 90);
-
-		// User 0 should be recommended movie 12
-		datasetUsers.get(1).AddRatingToMovie(12, 95);
-		
-		datasetUsers.get(0).AddRatingToMovie(13, 90);
-		datasetUsers.get(1).AddRatingToMovie(13, 90);
-		datasetUsers.get(0).AddRatingToMovie(14, 10);
-		datasetUsers.get(1).AddRatingToMovie(14, 10);
+		double[] ratingAlice = {0.0, 37.0, 25.0, 10.0, 0.0, 90.0, 0.0, 0.0, 75.0, 0.0, 0.0, 90.0, 0.00, 0.00, 90.0};
+		double[] ratingBob = {0.0, 37.0, 25.0, 10.0, 0.0, 90.0, 0.0, 0.0, 75.0, 0.0, 0.0, 90.0, 95.00, 0.00, 90.0};
+		datasetUsers.add(new User("Alice", ratingAlice));
+		datasetUsers.add(new User("Bob", ratingBob));
+ 
 
 		CorrelationAgent myAgent = new CorrelationAgent(datasetUsers);
-//		for (int i=0; i<2; i++)
-//		{
-//			for(int j=0; j<15; j++)
-//			{
-//				System.out.println("User "+i+" rated movie "+j+" a score of "+myAgent.users.get(i).GetRatings()[j]);
-//			}
-//		}
-		assertEquals("Toy Story", myAgent.RecommendMovieToUser(datasetUsers.get(0), 0));
+		assertEquals("Alice", myAgent.users.get(0).GetName());
+		assertEquals("Bob", myAgent.users.get(1).GetName());
+		assertEquals(myAgent.movies.getMovies().get(12).getName(), myAgent.RecommendMovieToUser(datasetUsers.get(0), 0));
 
 	}
 

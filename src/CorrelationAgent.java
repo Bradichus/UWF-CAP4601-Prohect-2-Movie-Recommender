@@ -50,7 +50,6 @@ public class CorrelationAgent {
 			if(i != locOfUserInUsersArray)
 			{
 				temp = this.CenteredCosineSimilarityBetweenTwoUsers(user, users.get(i));
-				System.out.println("Temp was "+temp);
 				if( max < temp)
 				{
 					max = temp;
@@ -58,12 +57,11 @@ public class CorrelationAgent {
 				}
 			}
 		}
-		System.out.println("Best matching user is "+bestMatchingUser.GetName());
-		
+		bestMatchingUser.CalculateAvgRatingsMinusMean();
+
 		double highestScore = 0.0;
 		int loc = 0;
 		for(int i=0; i<User.DEFAULT_NUM_MOVIES; i++) {
-			System.out.println("Highest score is "+highestScore);
 			if (user.GetHasRatedMovie()[i] == false) {
 				if (highestScore < bestMatchingUser.GetAvgRatingsMinusMean()[i]) {
 					highestScore = bestMatchingUser.GetAvgRatingsMinusMean()[i];
@@ -71,7 +69,7 @@ public class CorrelationAgent {
 				}
 			}
 		}
-		
+		 
 		return movies.getMovies().get(loc).getName();
 	}
 	
@@ -87,10 +85,6 @@ public class CorrelationAgent {
 		double magnitudeX = this.CalculateMagnitudeOfVector(userA);
 		double magnitudeY = this.CalculateMagnitudeOfVector(userB);
 		double crossProductXY = magnitudeX * magnitudeY;
-		
-		System.out.println("Centered cosine is "+ (dotProductXY / crossProductXY));
-		System.out.println("Dot is "+ (dotProductXY));
-		System.out.println("Cross is "+ (crossProductXY));
 		
 		return dotProductXY / crossProductXY;
 	}

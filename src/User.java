@@ -23,7 +23,7 @@ public class User {
 	{
 		this(DEFAULT_NAME);
 	}
-	
+	 
 	/**
 	 * One parameterized constructor
 	 * @param name
@@ -35,8 +35,9 @@ public class User {
 		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
 			this.ratings[i] = 0.0;
-			this.hasRatedMovie[i] = false;
 		}
+		CheckHasRatedMovie();
+		CalculateAvgRatingsMinusMean();
 	}
 	
 	/**
@@ -50,15 +51,9 @@ public class User {
 		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
 			this.ratings[i] = ratings[i];
-			if(ratings[i] != 0.0)
-			{
-				this.hasRatedMovie[i] = true;
-			}
-			else
-			{
-				this.hasRatedMovie[i] = false;
-			}
 		}
+		CheckHasRatedMovie();
+		CalculateAvgRatingsMinusMean();
 	}
 	
 	public void CalculateAvgRatingsMinusMean()
@@ -81,7 +76,8 @@ public class User {
 	public void AddRatingToMovie(int loc, double rating)
 	{
 		this.ratings[loc] = rating;
-		this.hasRatedMovie[loc] = true;
+		CheckHasRatedMovie();
+		CalculateAvgRatingsMinusMean();
 	}
 	
 	/**
@@ -132,26 +128,43 @@ public class User {
 	 * Mutator
 	 * @param ratings is the values rated for each movie
 	 */
-	void SetRatings(double[] ratings)
+	public void SetRatings(double[] ratings)
 	{
 		this.ratings = ratings;
+		CheckHasRatedMovie();
+	}
+	
+	public void CheckHasRatedMovie()
+	{
+		for(int i=0; i<DEFAULT_NUM_MOVIES; i++)
+		{
+			this.hasRatedMovie[i] = (ratings[i] != 0.0) ? true : false;
+		}
+	}
+	
+	public void PrintRatings()
+	{
+		for(int i=0; i< DEFAULT_NUM_MOVIES; i++)
+		{
+			System.out.println("Movie "+i+" ratings is "+ratings[i]);
+		}
 	}
 	
 	/**
 	 * Accessor
 	 * @return the ratings array which is the values rated for each movie
 	 */
-	double[] GetRatings()
+	public double[] GetRatings()
 	{
 		return this.ratings;
 	}
 	
-	double[] GetAvgRatingsMinusMean()
+	public double[] GetAvgRatingsMinusMean()
 	{
 		return this.avgRatingsMinusMean;
 	}
 	
-	boolean[] GetHasRatedMovie()
+	public boolean[] GetHasRatedMovie()
 	{
 		return this.hasRatedMovie;
 	}
