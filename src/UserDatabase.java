@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserDatabase {
-	
 	ArrayList<User> Users = new ArrayList<User>();
 	
 	UserDatabase() throws FileNotFoundException {
