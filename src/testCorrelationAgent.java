@@ -24,8 +24,8 @@ class testCorrelationAgent {
 	@Test
 	void testUserToUserRecommendationWithTwoUsers() throws FileNotFoundException {
 		ArrayList<User> datasetUsers = new ArrayList<User>();
-		double[] ratingAlice = {0.0, 37.0, 25.0, 10.0, 0.0, 90.0, 0.0, 0.0, 75.0, 0.0, 0.0, 90.0, 0.00, 0.00, 90.0};
-		double[] ratingBob = {0.0, 37.0, 25.0, 10.0, 0.0, 90.0, 0.0, 0.0, 75.0, 0.0, 0.0, 90.0, 95.00, 0.00, 90.0};
+		int[] ratingAlice = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 0, 0, 90};
+		int[] ratingBob = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 95, 0, 90};
 		datasetUsers.add(new User("Alice", ratingAlice));
 		datasetUsers.add(new User("Bob", ratingBob));
 		CorrelationAgent myAgent = new CorrelationAgent(datasetUsers);
@@ -51,7 +51,7 @@ class testCorrelationAgent {
 	@Test
 	void testItemToItemRecommendationWithOneUser() throws FileNotFoundException {
 		ArrayList<User> datasetUsers = new ArrayList<User>();
-		double[] ratingAlice = {0.0, 37.0, 25.0, 10.0, 0.0, 90.0, 0.0, 0.0, 75.0, 0.0, 0.0, 90.0, 95.00, 0.00, 90.0};
+		int[] ratingAlice = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 0, 0, 90};
 		datasetUsers.add(new User("Alice", ratingAlice));
 		CorrelationAgent myAgent = new CorrelationAgent(datasetUsers);
 		assertEquals("Alice", myAgent.users.get(0).GetName());

@@ -22,7 +22,7 @@ public class CorrelationAgent {
 			this.users.add(new User());
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param users
