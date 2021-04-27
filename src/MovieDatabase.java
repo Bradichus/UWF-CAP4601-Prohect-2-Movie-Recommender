@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MovieDatabase {
-
     final int NUM_FILE_HEADER_COLUMNS = 6;
     final int MAX_TAGS = 5;
 

@@ -82,6 +82,18 @@ class testMovie {
 			assertEquals("", tm8.getTags()[i]);
 		}
 	}
+	
+	@Test
+	void testRatingConstructor() {
+		String[] t = {"Sci-Fi", "Action", "Adventure", "Drama"};
+		Movie tm9 = new Movie("Star Wars: Episode IV - A New Hope", 1000, 500, 92.0, 4, t);
+		assertEquals("Star Wars: Episode IV - A New Hope", tm9.getName());
+		assertEquals(1000, tm9.getViews());
+		assertEquals(500, tm9.getNumReviews());
+		assertEquals(92, tm9.getRating());
+		assertEquals(4, tm9.getNumTags());
+		assertEquals("Sci-Fi", tm9.getTags()[0]);
+	}
 
 	@Test
 	void testRatingConstructor() {
