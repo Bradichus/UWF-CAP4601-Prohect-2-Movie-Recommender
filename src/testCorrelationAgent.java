@@ -13,9 +13,12 @@ class testCorrelationAgent {
 		 * @brief Format to test recommender between two user.
 		 * X's represent no rating provided for a movie
 		 * Y indicates the move that should be recommended
-		 *
-		 * [ x 37 25 10 x 90 x x 75 x x 90 Y x 90 10 ] User 0
-		 * [ x 37 25 10 x 90 x x 75 x x 90 95 x 90 10 ] User 1
+		 * 
+		 *    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 
+		 * [ xx 37 25 10 xx 90 xx xx 75 xx xx 90 YY xx 90 ] User 0
+		 * [ xx 37 25 10 xx 90 xx xx 75 xx xx 90 95 xx 90 ] User 1
+		 * 
+		 * Movie 12 should be the one recommended
 		 */
 
 		ArrayList<User> datasetUsers = new ArrayList<User>();
