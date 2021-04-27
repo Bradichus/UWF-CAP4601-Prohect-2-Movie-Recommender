@@ -10,9 +10,10 @@
 public class User {
 	static final String DEFAULT_NAME = "<NO_NAME>";
 	String name;
-	static final int DEFAULT_NUM_MOVIES = 5;
-	int numMovies = 5;
-	int[] ratings = new int [numMovies];
+	static final int DEFAULT_NUM_MOVIES = 15;
+	double[] ratings = new double [DEFAULT_NUM_MOVIES];
+	double[] avgRatingsMinusMean = new double [DEFAULT_NUM_MOVIES];
+	boolean[] hasRatedMovie = new boolean [DEFAULT_NUM_MOVIES];
 	
 	/**
 	 * Default constructor (chained constructor)
@@ -22,50 +23,87 @@ public class User {
 	{
 		this(DEFAULT_NAME);
 	}
-	
+	 
 	/**
 	 * One parameterized constructor
 	 * @param name
-	 * @param ratings is initialized to -1 as a stub
+	 * @param ratings is initialized to 0 as a stub
 	 */
 	public User(String name)
 	{
 		this.SetName(name);
-		this.SetNumMovies(DEFAULT_NUM_MOVIES);
-		this.DefineRatings();
+		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
+		{
+			this.ratings[i] = 0.0;
+		}
+		CheckHasRatedMovie();
+		CalculateAvgRatingsMinusMean();
 	}
 	
 	/**
 	 * Two parameterized constructor
 	 * @param name is passed as an argument to SetName 
-	 * @param ratings is passed as an argument to SetRatings
+	 * @param ratings is passed as an argument to initialize the ratings
 	 */
-	public User(String name, int[] ratings)
+	public User(String name, double[] ratings)
 	{
 		this.SetName(name);
-		this.SetNumMovies(ratings.length);
-		this.SetRatings(ratings);
-	}
-	
-	/**
-	 * Defines the ratings array to the size of movies
-	 * Initializes the ratings to a standardized score
-	 */
-	private void DefineRatings()
-	{
-		this.ratings = new int [this.GetNumMovies()];
-		this.SetInitialRatings();
-	}
-	
-	/**
-	 * Initializes all of the moves to a standardized scored of -1
-	 */
-	private void SetInitialRatings()
-	{
-		for(int i=0; i < this.GetNumMovies(); ++i)
+		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
-			this.SetSingleRating(i, -1);
+			this.ratings[i] = ratings[i];
 		}
+		CheckHasRatedMovie();
+		CalculateAvgRatingsMinusMean();
+	}
+	
+	public void CalculateAvgRatingsMinusMean()
+	{
+		double average = this.GetAverageRatings();
+		
+		for(int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
+		{
+			if(this.ratings[i] != 0.0)
+			{
+				this.avgRatingsMinusMean[i] = this.ratings[i] - average;
+			}
+			else
+			{
+				this.avgRatingsMinusMean[i] = 0.0;
+			}
+		}
+	}
+
+	public void AddRatingToMovie(int loc, double rating)
+	{
+		this.ratings[loc] = rating;
+		CheckHasRatedMovie();
+		CalculateAvgRatingsMinusMean();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double GetAverageRatings()
+	{
+		double sum = 0.0;
+		int count = 0;
+		
+		for(int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
+		{
+			if(this.ratings[i] != 0.0)
+			{
+				sum += this.ratings[i];
+				count++;
+			}
+		}
+		
+		if(count == 0)
+		{
+			return 0.0;
+		}
+		
+		return sum / count;
 	}
 	
 	/**
@@ -88,57 +126,46 @@ public class User {
 	
 	/**
 	 * Mutator
-	 * @param numMovies the number of movies to be rated
-	 */
-	public void SetNumMovies(int numMovies)
-	{
-		this.numMovies = numMovies;
-	}
-	
-	/**
-	 * Accessor
-	 * @return the number of movies that can be rated
-	 */
-	public int GetNumMovies()
-	{
-		return this.numMovies;
-	}
-	
-	/**
-	 * Mutator
 	 * @param ratings is the values rated for each movie
 	 */
-	void SetRatings(int[] ratings)
+	public void SetRatings(double[] ratings)
 	{
 		this.ratings = ratings;
+		CheckHasRatedMovie();
+	}
+	
+	public void CheckHasRatedMovie()
+	{
+		for(int i=0; i<DEFAULT_NUM_MOVIES; i++)
+		{
+			this.hasRatedMovie[i] = (ratings[i] != 0.0) ? true : false;
+		}
+	}
+	
+	public void PrintRatings()
+	{
+		for(int i=0; i< DEFAULT_NUM_MOVIES; i++)
+		{
+			System.out.println("Movie "+i+" ratings is "+ratings[i]);
+		}
 	}
 	
 	/**
 	 * Accessor
 	 * @return the ratings array which is the values rated for each movie
 	 */
-	int[] GetRatings()
+	public double[] GetRatings()
 	{
 		return this.ratings;
 	}
 	
-	/**
-	 * Mutator
-	 * @param loc the location on the ratings array to set
-	 * @param rating the value to set on the ratings array
-	 */
-	void SetSingleRating(int loc, int rating)
+	public double[] GetAvgRatingsMinusMean()
 	{
-		this.ratings[loc] = rating;
+		return this.avgRatingsMinusMean;
 	}
 	
-	/**
-	 * Accessor
-	 * @param loc the location on the ratings array
-	 * @return the value at the location in the ratings array
-	 */
-	int GetSingleRating(int loc)
+	public boolean[] GetHasRatedMovie()
 	{
-		return this.ratings[loc];
+		return this.hasRatedMovie;
 	}
 }
