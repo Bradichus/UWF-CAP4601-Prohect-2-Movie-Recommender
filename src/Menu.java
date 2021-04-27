@@ -3,23 +3,35 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-	ArrayList<MovieDatabase> movies;
-	ArrayList<UserDatabase> users;
+	MovieDatabase movies;
+	UserDatabase users;
 	
 	/**
 	 * 
 	 * @param args
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[]) throws FileNotFoundException {
 		Menu myRecommender = new Menu();
 	}
 	
 	/**
+	 * @throws FileNotFoundException 
 	 * 
 	 */
-	public Menu() {
-		this.movies = new ArrayList<MovieDatabase>();
-		this.users = new ArrayList<UserDatabase>();
+	public Menu() throws FileNotFoundException {
+		try {
+			this.movies = new MovieDatabase();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			this.users = new UserDatabase();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		MainMenu();
 	}
 	
@@ -48,6 +60,7 @@ public class Menu {
 				break;
 			case 3:
 				//Add a user
+				users.AddUser(CreateUser(scnr));
 				break;
 			case 4:
 				//Recommend a movie for user
@@ -58,6 +71,17 @@ public class Menu {
 		} while(!quit);
 		
 		scnr.close();
+	}
+	
+	public User CreateUser(Scanner s) {
+		User u;
+		
+		System.out.print("What is the user's name: ");
+		String name = s.nextLine();
+		
+		u = new User(name);
+		
+		return u;
 	}
 	
 	/**
