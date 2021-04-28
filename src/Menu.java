@@ -149,7 +149,7 @@ public class Menu {
 			name = name.strip();
 			index = users.isValidUser(name);
 		} while(index < 0);
-		System.out.println("Recommendation: "+ myAgent.RecommendMovieToUser(users.GetUsers().get(index), index));
+		System.out.println("Recommendation: "+ myAgent.RecommendMovieToUser(users.GetUsers().get(index), users, movies, index));
 		System.out.println("");
 	}
 	

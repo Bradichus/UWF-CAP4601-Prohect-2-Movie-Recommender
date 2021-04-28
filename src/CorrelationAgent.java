@@ -1,62 +1,37 @@
-import java.io.FileNotFoundException;
 import java.lang.Math; // Import for Math.sqrt() method
-import java.util.ArrayList;
 
 public class CorrelationAgent {
-	ArrayList<User> users = new ArrayList<User>();
-	MovieDatabase movies = new MovieDatabase();
-	private final int DEFAULT_NUM_USERS = 2;
-	
 	/**
 	 * Default constructor
 	 */
-	public CorrelationAgent() throws FileNotFoundException {
-//		this.InitializeUsers();
-	}
-//
-//	/**
-//	 * @implNote Sets up the users list with a default amount
-//	 */
-//	private void InitializeUsers() {
-//		for(int i=0; i < DEFAULT_NUM_USERS; i++) {
-//			this.users.add(new User());
-//		}
-//	}
-//
-//	/**
-//	 * 
-//	 * @param users
-//	 */
-//	public CorrelationAgent(ArrayList<User> users) throws FileNotFoundException {
-//		this.users = users;
-//	}
+	public CorrelationAgent() {}
 	
 	/**
 	 * 
 	 * @param user
 	 * @return
 	 */
-	public String RecommendMovieToUser(User user, int locOfUserInUsersArray) {
-		User bestMatch = FindBestMatchingUser(user, locOfUserInUsersArray);
-		int index = UserToUserCollaborativeFiltering(user, bestMatch);
+	public String RecommendMovieToUser(User user, UserDatabase userDB, MovieDatabase imdb, int locOfUserInUsersArray) {
+		User bestMatch = FindBestMatchingUser(user, userDB, locOfUserInUsersArray);
+		int index = UserToUserCollaborativeFiltering(user, bestMatch, imdb);
 		int maxScore = bestMatch.GetAvgRatingsMinusMean()[index];
 		if(maxScore <= 0) {
-			index = ItemToItemCollaborativeFiltering(user);
+			index = ItemToItemCollaborativeFiltering(user, imdb);
 		}
 		 
-		return movies.getMovies().get(index).getName();
+		return  imdb.getMovies().get(index).getName();
 	}
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public int ItemToItemCollaborativeFiltering(User user) {
+	public int ItemToItemCollaborativeFiltering(User user, MovieDatabase imdb) {
 		int max = Integer.MIN_VALUE;
 		int index = 0;
-		for(int i=0; i < movies.getMovies().size(); i++) {
-			if(!user.GetHasRatedMovie()[i] && max < (int)movies.getMovies().get(i).getRating()) {
-				max = (int)movies.getMovies().get(i).getRating();
+		for(int i=0; i < imdb.getMovies().size(); i++) {
+			if(!user.GetHasRatedMovie()[i] && max < (int)imdb.getMovies().get(i).getRating()) {
+				max = (int)imdb.getMovies().get(i).getRating();
 				index = i;
 			}
 		}
@@ -70,10 +45,10 @@ public class CorrelationAgent {
 	 * @param bestMatch
 	 * @return
 	 */
-	public int UserToUserCollaborativeFiltering(User user, User bestMatch) {
+	public int UserToUserCollaborativeFiltering(User user, User bestMatch, MovieDatabase imdb) {
 		double max = Integer.MIN_VALUE;
 		int index = 0;
-		for(int i=0; i < movies.getMovies().size(); i++) {
+		for(int i=0; i < imdb.getMovies().size(); i++) {
 			if(user.GetHasRatedMovie()[i] == false) {
 				if(max < bestMatch.GetAvgRatingsMinusMean()[i]) {
 					max = bestMatch.GetAvgRatingsMinusMean()[i];
@@ -91,16 +66,16 @@ public class CorrelationAgent {
 	 * @param locOfUserInUsersArray
 	 * @return
 	 */
-	public User FindBestMatchingUser(User user, int indexOfUser) {
+	public User FindBestMatchingUser(User user, UserDatabase userDB, int indexOfUser) {
 		double num = 0.0;
 		double max = Integer.MIN_VALUE;
 		User bestMatch = new User();
-		for (int i = 0; i < users.size (); i++) {
+		for (int i = 0; i < userDB.GetUsers().size(); i++) {
 			if(i != indexOfUser) {
-				num = this.CenteredCosineSimilarityBetweenTwoUsers(user, users.get(i));
+				num = this.CenteredCosineSimilarityBetweenTwoUsers(user, userDB.GetUsers().get(i));
 				if(max < num) {
 					max = num;
-					bestMatch = users.get(i);
+					bestMatch = userDB.GetUsers().get(i);
 				}
 			}
 		}
