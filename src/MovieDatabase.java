@@ -49,6 +49,19 @@ public class MovieDatabase {
         } s.close();
     }
 
+    public String toString() {
+		String to_string = "";
+		for(int i=0; i < Movies.size(); i++)
+		{
+			to_string += Movies.get(i).getName();
+			if(i != Movies.size() - 1)
+			{
+				to_string +=", ";
+			}
+		}
+		return to_string;
+	}
+    
     ArrayList<Movie> getMovies() {return Movies;}
 
 }

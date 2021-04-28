@@ -1,5 +1,4 @@
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -87,6 +86,7 @@ public class Menu {
 				CreateUser(scnr);
 				break;
 			case 4:
+				AddRatingToUser(scnr);
 				break;
 			case 5:
 				RecommendMovieToUser(scnr);
@@ -97,6 +97,23 @@ public class Menu {
 		} while(!quit);
 		System.out.println("\n==========    END     ==========");
 		scnr.close();
+	}
+	
+	public void AddRatingToUser(Scanner s)
+	{
+		String name;
+		int index;
+		System.out.println("\n========== Add Rating ==========");
+		
+		do {
+			System.out.println(users.toString());
+			System.out.print("\nWhich user do you want to add a rating to: ");
+			name = s.nextLine();
+			name = name.strip();
+			index = users.isValidUser(name);
+		} while(index < 0);
+		
+		users.GetUsers().get(index).SetARating(s);
 	}
 	
 	/**

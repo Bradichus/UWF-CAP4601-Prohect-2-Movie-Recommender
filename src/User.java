@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Project 2 Movie Recommender
  * CAP4601 Intro to AI
@@ -89,6 +91,11 @@ public class User {
 		}
 		
 		return to_string;
+	}
+	
+	public void SetARating(Scanner s)
+	{
+		
 	}
 	
 	/**

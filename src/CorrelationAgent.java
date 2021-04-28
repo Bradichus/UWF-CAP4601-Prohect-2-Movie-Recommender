@@ -39,7 +39,7 @@ public class CorrelationAgent {
 	public String RecommendMovieToUser(User user, int locOfUserInUsersArray) {
 		User bestMatch = FindBestMatchingUser(user, locOfUserInUsersArray);
 		int index = UserToUserCollaborativeFiltering(user, bestMatch);
-		int maxScore = (int)bestMatch.GetAvgRatingsMinusMean()[index];
+		int maxScore = bestMatch.GetAvgRatingsMinusMean()[index];
 		if(maxScore <= 0) {
 			index = ItemToItemCollaborativeFiltering(user);
 		}
