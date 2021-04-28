@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * Project 2 Movie Recommender
  * CAP4601 Intro to AI
@@ -11,8 +14,8 @@ public class User {
 	static final String DEFAULT_NAME = "<NO_NAME>";
 	String name;
 	static final int DEFAULT_NUM_MOVIES = 15;
-	double[] ratings = new double [DEFAULT_NUM_MOVIES];
-	double[] avgRatingsMinusMean = new double [DEFAULT_NUM_MOVIES];
+	int[] ratings = new int [DEFAULT_NUM_MOVIES];
+	int[] avgRatingsMinusMean = new int [DEFAULT_NUM_MOVIES];
 	boolean[] hasRatedMovie = new boolean [DEFAULT_NUM_MOVIES];
 	
 	/**
@@ -23,7 +26,7 @@ public class User {
 	{
 		this(DEFAULT_NAME);
 	}
-	 
+	
 	/**
 	 * One parameterized constructor
 	 * @param name
@@ -34,7 +37,7 @@ public class User {
 		this.SetName(name);
 		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
-			this.ratings[i] = 0.0;
+			this.ratings[i] = 0;
 		}
 		CheckHasRatedMovie();
 		CalculateAvgRatingsMinusMean();
@@ -45,7 +48,7 @@ public class User {
 	 * @param name is passed as an argument to SetName 
 	 * @param ratings is passed as an argument to initialize the ratings
 	 */
-	public User(String name, double[] ratings)
+	public User(String name, int[] ratings)
 	{
 		this.SetName(name);
 		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
@@ -56,24 +59,95 @@ public class User {
 		CalculateAvgRatingsMinusMean();
 	}
 	
+	/**
+	 * 
+	 * @param string
+	 * @param length
+	 * @return
+	 */
+	public String fixedLengthString(String string, int length)
+	{
+	    return String.format("%1$"+length+ "s", string);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String toString()
+	{
+		String to_string = "";
+		to_string += fixedLengthString(GetName(), 6);
+		to_string += " - ";
+		for(int i=0; i < GetRatings().length; i++)
+		{
+			if(GetRatings()[i] < 10) {
+				to_string += "0";
+			}
+			to_string += GetRatings()[i];
+			if(i != GetRatings().length - 1)
+			{
+				to_string += ", ";
+			}
+		}
+		
+		return to_string;
+	}
+	
+	public void SetARating(Scanner s, MovieDatabase imdb)
+	{
+		String title;
+		int index;
+		do
+		{
+			System.out.println("Which movie would you like to rate?");
+			System.out.println(imdb.toString());
+			title = s.nextLine();
+			index = imdb.isValidMovie(title);
+		} while(index < 0);
+		
+		int rating;
+		do
+		{
+			System.out.print("What is your rating for "+imdb.getMovies().get(index).getName()+": ");
+			rating = s.nextInt();
+			s.nextLine();
+			if(!(0 < rating && rating < 100))
+			{
+				System.out.println("\nNot a valid rating, please rate from 0 to 100");
+			}
+		} while(!(0 <= rating && rating <= 100));
+		
+		ratings[index] = rating;
+		System.out.println("");
+	}
+	
+	/**
+	 * 
+	 */
 	public void CalculateAvgRatingsMinusMean()
 	{
-		double average = this.GetAverageRatings();
+		int average = this.GetAverageRatings();
 		
 		for(int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
 		{
-			if(this.ratings[i] != 0.0)
+			if(this.ratings[i] != 0)
 			{
 				this.avgRatingsMinusMean[i] = this.ratings[i] - average;
 			}
 			else
 			{
-				this.avgRatingsMinusMean[i] = 0.0;
+				this.avgRatingsMinusMean[i] = 0;
 			}
 		}
 	}
 
-	public void AddRatingToMovie(int loc, double rating)
+	/**
+	 * 
+	 * @param loc
+	 * @param rating
+	 */
+	public void AddRatingToMovie(int loc, int rating)
 	{
 		this.ratings[loc] = rating;
 		CheckHasRatedMovie();
@@ -84,9 +158,9 @@ public class User {
 	 * 
 	 * @return
 	 */
-	public double GetAverageRatings()
+	public int GetAverageRatings()
 	{
-		double sum = 0.0;
+		int sum = 0;
 		int count = 0;
 		
 		for(int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
@@ -100,7 +174,7 @@ public class User {
 		
 		if(count == 0)
 		{
-			return 0.0;
+			return 0;
 		}
 		
 		return sum / count;
@@ -128,20 +202,26 @@ public class User {
 	 * Mutator
 	 * @param ratings is the values rated for each movie
 	 */
-	public void SetRatings(double[] ratings)
+	public void SetRatings(int[] ratings)
 	{
 		this.ratings = ratings;
 		CheckHasRatedMovie();
 	}
 	
+	/**
+	 * 
+	 */
 	public void CheckHasRatedMovie()
 	{
 		for(int i=0; i<DEFAULT_NUM_MOVIES; i++)
 		{
-			this.hasRatedMovie[i] = (ratings[i] != 0.0) ? true : false;
+			this.hasRatedMovie[i] = (ratings[i] != 0) ? true : false;
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void PrintRatings()
 	{
 		for(int i=0; i< DEFAULT_NUM_MOVIES; i++)
@@ -154,16 +234,24 @@ public class User {
 	 * Accessor
 	 * @return the ratings array which is the values rated for each movie
 	 */
-	public double[] GetRatings()
+	public int[] GetRatings()
 	{
 		return this.ratings;
 	}
 	
-	public double[] GetAvgRatingsMinusMean()
+	/**
+	 * 
+	 * @return
+	 */
+	public int[] GetAvgRatingsMinusMean()
 	{
 		return this.avgRatingsMinusMean;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean[] GetHasRatedMovie()
 	{
 		return this.hasRatedMovie;

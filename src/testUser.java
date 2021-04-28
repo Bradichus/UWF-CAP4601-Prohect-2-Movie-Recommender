@@ -10,7 +10,7 @@ class testUser
 	{
 		final String DEFAULT_NAME = "<NO_NAME>";
 		final int numMovies = 15;
-		final double initialRating = 0.0;
+		final int initialRating = 0;
 		User user = new User();
 		
 		assertEquals(user.GetName(), DEFAULT_NAME);
@@ -30,7 +30,7 @@ class testUser
 		user.SetName(name);
 		assertEquals(user.GetName(), name);
 
-		final double[] ratings = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0};
+		final int[] ratings = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 		for(int i=0; i < User.DEFAULT_NUM_MOVIES; ++i)
 		{
 			user.ratings[i] = ratings[i];
@@ -52,7 +52,7 @@ class testUser
 	{
 		final String name = "Jack";
 		final int numMovies = 10;
-		final double[] ratings = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0};
+		final int[] ratings = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 		
 		User user = new User(name, ratings);
 		

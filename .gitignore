@@ -5,6 +5,9 @@
 # Project file
 .project
 
+# Eclipse settings
+.settings
+
 # Log file
 *.log
 
