@@ -48,10 +48,14 @@ public class UserDatabase {
 		int index = -1;
 		for(int i=0; i < Users.size(); i++)
 		{
-			if(Users.get(i).GetName() == name)
+			if(Users.get(i).GetName().equals(name))
 			{
 				index = i;
 			}
+		}
+		if(index < 0)
+		{
+			System.out.println("Could not find that user");
 		}
 		return index;
 	}

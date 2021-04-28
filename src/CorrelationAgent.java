@@ -58,7 +58,6 @@ public class CorrelationAgent {
 			if(!user.GetHasRatedMovie()[i] && max < (int)movies.getMovies().get(i).getRating()) {
 				max = (int)movies.getMovies().get(i).getRating();
 				index = i;
-				System.out.println(""+movies.getMovies().get(i).getName()+" ");
 			}
 		}
 		

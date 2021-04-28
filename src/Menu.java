@@ -85,15 +85,11 @@ public class Menu {
 				break;
 			case 3:
 				CreateUser(scnr);
-//				System.out.print("\nWhat is the user's name: ");
-//				String name = scnr.nextLine();
-//				users.AddUser(new User(name));
-//				System.out.println("");
 				break;
 			case 4:
 				break;
 			case 5:
-				//Recommend a movie for user
+				RecommendMovieToUser(scnr);
 				break;
 			case 6:
 				quit = true;
@@ -103,11 +99,36 @@ public class Menu {
 		scnr.close();
 	}
 	
+	/**
+	 * 
+	 * @param s
+	 */
 	public void CreateUser(Scanner s)
 	{
 		System.out.print("\nWhat is the user's name: ");
 		String name = s.nextLine();
 		users.AddUser(new User(name));
+		System.out.println("");
+	}
+	
+	/**
+	 * 
+	 * @param s
+	 */
+	public void RecommendMovieToUser(Scanner s)
+	{
+		String name;
+		int index;
+		System.out.println("\n======== Movie Recommend =======");
+		
+		do {
+			System.out.println(users.toString());
+			System.out.print("\nWhich user do you want to recommend a movie to: ");
+			name = s.nextLine();
+			name = name.strip();
+			index = users.isValidUser(name);
+		} while(index < 0);
+		System.out.println("Recommendation: "+ myAgent.RecommendMovieToUser(users.GetUsers().get(index), index));
 		System.out.println("");
 	}
 	
@@ -121,7 +142,7 @@ public class Menu {
 		{
 			System.out.println(""+ (i+1)+") "+movies.getMovies().get(i).toString());
 		}
-		System.out.println("================================\n");
+		System.out.println("");
 	}
 	
 	/**
@@ -134,7 +155,7 @@ public class Menu {
 		{
 			System.out.println(""+(i+1)+") "+users.GetUsers().get(i).toString());
 		}
-		System.out.println("================================\n");
+		System.out.println("");
 	}
 	
 	/**
@@ -146,7 +167,7 @@ public class Menu {
 		System.out.println("2) View the User Database");
 		System.out.println("3) Add a new user to the User Database");
 		System.out.println("4) Add a rating to a user");
-		System.out.println("5) Ask for a user's next recommended movie");
+		System.out.println("5) Recommend movie for user");
 		System.out.println("6) Quit");
 		System.out.println("");
 		System.out.print("Enter an option number to proceed: ");
@@ -160,7 +181,7 @@ public class Menu {
 		if(0 < x && x < 7) {
 			return true;
 		}
-		System.out.println("~> Enter a valid number from the list");
+		System.out.println("~> Enter a valid number from the list\n");
 		return false;
 	}
 }
