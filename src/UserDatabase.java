@@ -43,6 +43,19 @@ public class UserDatabase {
 		return to_string;
 	}
 	
+	public int isValidUser(String name)
+	{
+		int index = -1;
+		for(int i=0; i < Users.size(); i++)
+		{
+			if(Users.get(i).GetName() == name)
+			{
+				index = i;
+			}
+		}
+		return index;
+	}
+	
 	ArrayList<User> GetUsers() {return Users;}
 	
 	void AddUser(User u) {Users.add(u);}
