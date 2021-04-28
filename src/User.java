@@ -96,8 +96,30 @@ public class User {
 	
 	public void SetARating(Scanner s, MovieDatabase imdb)
 	{
-		System.out.println("Which movie would you like to rate?");
-		System.out.println(imdb.toString());
+		String title;
+		int index;
+		do
+		{
+			System.out.println("Which movie would you like to rate?");
+			System.out.println(imdb.toString());
+			title = s.nextLine();
+			index = imdb.isValidMovie(title);
+		} while(index < 0);
+		
+		int rating;
+		do
+		{
+			System.out.print("What is your rating for "+imdb.getMovies().get(index).getName()+": ");
+			rating = s.nextInt();
+			s.nextLine();
+			if(!(0 < rating && rating < 100))
+			{
+				System.out.println("\nNot a valid rating, please rate from 0 to 100");
+			}
+		} while(!(0 <= rating && rating <= 100));
+		
+		ratings[index] = rating;
+		System.out.println("");
 	}
 	
 	/**
