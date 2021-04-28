@@ -30,6 +30,19 @@ public class UserDatabase {
 		scnr.close();
 	}
 	
+	public String toString() {
+		String to_string = "";
+		for(int i=0; i < Users.size(); i++)
+		{
+			to_string += Users.get(i).GetName();
+			if(i != Users.size() - 1)
+			{
+				to_string +=", ";
+			}
+		}
+		return to_string;
+	}
+	
 	ArrayList<User> GetUsers() {return Users;}
 	
 	void AddUser(User u) {Users.add(u);}

@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Menu {
 	MovieDatabase movies;
 	UserDatabase users;
+	CorrelationAgent myAgent = new CorrelationAgent();
 	
 	/**
 	 * 
@@ -72,30 +73,42 @@ public class Menu {
 			do {
 				MenuOptions();
 				option = scnr.nextInt();
+				scnr.nextLine();
 			} while(!IsValidOption(option));
 			
 			switch(option) {
 			case 1:
-				//Print Moive Database
 				PrintMovieDatabase();
 				break;
 			case 2:
-				//Print User Database
 				PrintUserDatabase();
 				break;
 			case 3:
-				//Add a user
-				users.AddUser(CreateUser(scnr));
+				CreateUser(scnr);
+//				System.out.print("\nWhat is the user's name: ");
+//				String name = scnr.nextLine();
+//				users.AddUser(new User(name));
+//				System.out.println("");
 				break;
 			case 4:
-				//Recommend a movie for user
 				break;
 			case 5:
+				//Recommend a movie for user
+				break;
+			case 6:
 				quit = true;
 			}
 		} while(!quit);
 		System.out.println("\n==========    END     ==========");
 		scnr.close();
+	}
+	
+	public void CreateUser(Scanner s)
+	{
+		System.out.print("\nWhat is the user's name: ");
+		String name = s.nextLine();
+		users.AddUser(new User(name));
+		System.out.println("");
 	}
 	
 	/**
@@ -107,7 +120,6 @@ public class Menu {
 		for(int i=0; i < movies.getMovies().size(); i++)
 		{
 			System.out.println(""+ (i+1)+") "+movies.getMovies().get(i).toString());
-//			System.out.println(", Avg Rating: "+movies.getMovies().get(i).getRating());
 		}
 		System.out.println("================================\n");
 	}
@@ -121,25 +133,8 @@ public class Menu {
 		for(int i=0; i < users.GetUsers().size(); i++)
 		{
 			System.out.println(""+(i+1)+") "+users.GetUsers().get(i).toString());
-			//System.out.println("");
 		}
 		System.out.println("================================\n");
-	}
-	
-	/**
-	 * 
-	 * @param s
-	 * @return
-	 */
-	public User CreateUser(Scanner s) {
-		User u;
-		
-		System.out.print("What is the user's name: ");
-		String name = s.nextLine();
-		
-		u = new User(name);
-		System.out.println("");
-		return u;
 	}
 	
 	/**
@@ -150,8 +145,9 @@ public class Menu {
 		System.out.println("1) View the Movie Database");
 		System.out.println("2) View the User Database");
 		System.out.println("3) Add a new user to the User Database");
-		System.out.println("4) Ask for a user's next recommended movie");
-		System.out.println("5) Quit");
+		System.out.println("4) Add a rating to a user");
+		System.out.println("5) Ask for a user's next recommended movie");
+		System.out.println("6) Quit");
 		System.out.println("");
 		System.out.print("Enter an option number to proceed: ");
 	}
@@ -161,7 +157,7 @@ public class Menu {
 	 * @return
 	 */
 	public boolean IsValidOption(int x) {
-		if(0 < x && x < 6) {
+		if(0 < x && x < 7) {
 			return true;
 		}
 		System.out.println("~> Enter a valid number from the list");

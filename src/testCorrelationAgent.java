@@ -21,18 +21,18 @@ class testCorrelationAgent {
 	 * 
 	 * Movie 12 should be the one recommended
 	 */
-	@Test
-	void testUserToUserRecommendationWithTwoUsers() throws FileNotFoundException {
-		ArrayList<User> datasetUsers = new ArrayList<User>();
-		int[] ratingAlice = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 0, 0, 90};
-		int[] ratingBob = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 95, 0, 90};
-		datasetUsers.add(new User("Alice", ratingAlice));
-		datasetUsers.add(new User("Bob", ratingBob));
-		CorrelationAgent myAgent = new CorrelationAgent(datasetUsers);
-		assertEquals("Alice", myAgent.users.get(0).GetName());
-		assertEquals("Bob", myAgent.users.get(1).GetName());
-		assertEquals(myAgent.movies.getMovies().get(12).getName(), myAgent.RecommendMovieToUser(datasetUsers.get(0), 0));
-	}
+	//@Test
+//	void testUserToUserRecommendationWithTwoUsers() throws FileNotFoundException {
+//		ArrayList<User> datasetUsers = new ArrayList<User>();
+//		int[] ratingAlice = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 0, 0, 90};
+//		int[] ratingBob = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 95, 0, 90};
+//		datasetUsers.add(new User("Alice", ratingAlice));
+//		datasetUsers.add(new User("Bob", ratingBob));
+//		CorrelationAgent myAgent = new CorrelationAgent(datasetUsers);
+//		assertEquals("Alice", myAgent.users.get(0).GetName());
+//		assertEquals("Bob", myAgent.users.get(1).GetName());
+//		assertEquals(myAgent.movies.getMovies().get(12).getName(), myAgent.RecommendMovieToUser(datasetUsers.get(0), 0));
+//	}
 	
 	/**
 		 * @brief Item-to-item collaborative filtering
@@ -48,14 +48,14 @@ class testCorrelationAgent {
 		 *                                 
 		 * Movie 7 should be the one recommended
 		 */
-	@Test
-	void testItemToItemRecommendationWithOneUser() throws FileNotFoundException {
-		ArrayList<User> datasetUsers = new ArrayList<User>();
-		int[] ratingAlice = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 0, 0, 90};
-		datasetUsers.add(new User("Alice", ratingAlice));
-		CorrelationAgent myAgent = new CorrelationAgent(datasetUsers);
-		assertEquals("Alice", myAgent.users.get(0).GetName());
-		assertEquals(myAgent.movies.getMovies().get(7).getName(), myAgent.RecommendMovieToUser(datasetUsers.get(0), 0));
-	}
+//	@Test
+//	void testItemToItemRecommendationWithOneUser() throws FileNotFoundException {
+//		ArrayList<User> datasetUsers = new ArrayList<User>();
+//		int[] ratingAlice = {0, 37, 25, 10, 0, 90, 0, 0, 75, 0, 0, 90, 0, 0, 90};
+//		datasetUsers.add(new User("Alice", ratingAlice));
+//		CorrelationAgent myAgent = new CorrelationAgent(datasetUsers);
+//		assertEquals("Alice", myAgent.users.get(0).GetName());
+//		assertEquals(myAgent.movies.getMovies().get(7).getName(), myAgent.RecommendMovieToUser(datasetUsers.get(0), 0));
+//	}
 
 }

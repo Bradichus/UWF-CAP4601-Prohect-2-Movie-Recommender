@@ -11,25 +11,25 @@ public class CorrelationAgent {
 	 * Default constructor
 	 */
 	public CorrelationAgent() throws FileNotFoundException {
-		this.InitializeUsers();
+//		this.InitializeUsers();
 	}
-
-	/**
-	 * @implNote Sets up the users list with a default amount
-	 */
-	private void InitializeUsers() {
-		for(int i=0; i < DEFAULT_NUM_USERS; i++) {
-			this.users.add(new User());
-		}
-	}
-
-	/**
-	 * 
-	 * @param users
-	 */
-	public CorrelationAgent(ArrayList<User> users) throws FileNotFoundException {
-		this.users = users;
-	}
+//
+//	/**
+//	 * @implNote Sets up the users list with a default amount
+//	 */
+//	private void InitializeUsers() {
+//		for(int i=0; i < DEFAULT_NUM_USERS; i++) {
+//			this.users.add(new User());
+//		}
+//	}
+//
+//	/**
+//	 * 
+//	 * @param users
+//	 */
+//	public CorrelationAgent(ArrayList<User> users) throws FileNotFoundException {
+//		this.users = users;
+//	}
 	
 	/**
 	 * 
