@@ -18,7 +18,7 @@ public class UserDatabase {
 		{
 			next = scnr.next();
 			if(next.isEmpty()) {
-				break;
+				next = scnr.next();
 			}
 			name = next;
 			for(int i=0; i < 15; i++) {

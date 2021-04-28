@@ -58,6 +58,41 @@ public class User {
 	
 	/**
 	 * 
+	 * @param string
+	 * @param length
+	 * @return
+	 */
+	public String fixedLengthString(String string, int length)
+	{
+	    return String.format("%1$"+length+ "s", string);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String toString()
+	{
+		String to_string = "";
+		to_string += fixedLengthString(GetName(), 6);
+		to_string += " - ";
+		for(int i=0; i < GetRatings().length; i++)
+		{
+			if(GetRatings()[i] < 10) {
+				to_string += "0";
+			}
+			to_string += GetRatings()[i];
+			if(i != GetRatings().length - 1)
+			{
+				to_string += ", ";
+			}
+		}
+		
+		return to_string;
+	}
+	
+	/**
+	 * 
 	 */
 	public void CalculateAvgRatingsMinusMean()
 	{
