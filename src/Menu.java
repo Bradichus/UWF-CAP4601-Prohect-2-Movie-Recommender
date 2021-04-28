@@ -99,6 +99,10 @@ public class Menu {
 		scnr.close();
 	}
 	
+	/**
+	 * 
+	 * @param s
+	 */
 	public void AddRatingToUser(Scanner s)
 	{
 		String name;
@@ -113,7 +117,7 @@ public class Menu {
 			index = users.isValidUser(name);
 		} while(index < 0);
 		
-		users.GetUsers().get(index).SetARating(s);
+		users.GetUsers().get(index).SetARating(s, movies);
 	}
 	
 	/**

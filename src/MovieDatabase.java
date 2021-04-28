@@ -62,6 +62,23 @@ public class MovieDatabase {
 		return to_string;
 	}
     
+    public int isValidMovie(String name)
+	{
+		int index = -1;
+		for(int i=0; i < Movies.size(); i++)
+		{
+			if(Movies.get(i).getName().equals(name))
+			{
+				index = i;
+			}
+		}
+		if(index < 0)
+		{
+			System.out.println("Could not find that movie");
+		}
+		return index;
+	}
+    
     ArrayList<Movie> getMovies() {return Movies;}
 
 }

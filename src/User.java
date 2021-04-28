@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -93,9 +94,10 @@ public class User {
 		return to_string;
 	}
 	
-	public void SetARating(Scanner s)
+	public void SetARating(Scanner s, MovieDatabase imdb)
 	{
-		
+		System.out.println("Which movie would you like to rate?");
+		System.out.println(imdb.toString());
 	}
 	
 	/**
