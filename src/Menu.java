@@ -106,8 +106,8 @@ public class Menu {
 		System.out.println("\n========== Movie List ==========");
 		for(int i=0; i < movies.getMovies().size(); i++)
 		{
-			System.out.print(""+ (i+1)+") "+movies.getMovies().get(i).getName());
-			System.out.println(", Avg Rating: "+movies.getMovies().get(i).getRating());
+			System.out.println(""+ (i+1)+") "+movies.getMovies().get(i).toString());
+//			System.out.println(", Avg Rating: "+movies.getMovies().get(i).getRating());
 		}
 		System.out.println("================================\n");
 	}

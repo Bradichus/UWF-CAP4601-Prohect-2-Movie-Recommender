@@ -10,6 +10,9 @@ public class Movie {
 	final int MAX_RATING = 5;
 	double rating;
 
+	/**
+	 * 
+	 */
 	public Movie()
 	{
 		name = "";
@@ -24,6 +27,10 @@ public class Movie {
 		rating = 0;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 */
 	public Movie(String name)
 	{
 		this.name = name;
@@ -38,6 +45,13 @@ public class Movie {
 		rating = 0;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param numViews
+	 * @param numReviews
+	 * @param totalUserScore
+	 */
 	public Movie(String name, int numViews, int numReviews, int totalUserScore)
 	{
 		this.name = name;
@@ -52,8 +66,16 @@ public class Movie {
 		rating = calculateRating();
 	}
 
-	public Movie(String name, int numViews, int numReviews, int totalUserScore,
-				 int numTags,  String[] tags)
+	/**
+	 * 
+	 * @param name
+	 * @param numViews
+	 * @param numReviews
+	 * @param totalUserScore
+	 * @param numTags
+	 * @param tags
+	 */
+	public Movie(String name, int numViews, int numReviews, int totalUserScore, int numTags,  String[] tags)
 	{
 		this.name = name;
 		this.numTags = 0;
@@ -71,6 +93,15 @@ public class Movie {
 		rating = calculateRating();
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param numViews
+	 * @param numReviews
+	 * @param rating
+	 * @param numTags
+	 * @param tags
+	 */
 	public Movie(String name, int numViews, int numReviews, double rating, int numTags, String[] tags)
 	{
 		this.name = name;
@@ -87,7 +118,24 @@ public class Movie {
 		this.maxUserScore = this.numReviews * MAX_RATING;
 		this.rating = rating;
 	}
+	
+	/**
+	 * 
+	 */
+	public String toString() {
+		String to_string = "";
+		to_string += getName();
+		to_string += " - Avg Rating: ";
+		to_string += getRating();
+		
+		return to_string;
+	}
 
+	/**
+	 * 
+	 * @param newTag
+	 * @return
+	 */
 	public boolean tag(String newTag)
 	{
 		boolean success = false;
@@ -108,6 +156,12 @@ public class Movie {
 		return success;
 	}
 
+	/**
+	 * 
+	 * @param oldTag
+	 * @param newTag
+	 * @return
+	 */
 	public boolean replaceTag(String oldTag, String newTag)
 	{
 		boolean success = false;
@@ -119,6 +173,11 @@ public class Movie {
 		return success;
 	}
 
+	/**
+	 * 
+	 * @param oldTag
+	 * @return
+	 */
 	public boolean removeTag(String oldTag)
 	{
 		boolean success = false;
@@ -138,16 +197,28 @@ public class Movie {
 		return success;
 	}
 
+	/**
+	 * 
+	 * @param newScore
+	 */
 	public void addReview(int newScore) {
 		numReviews += 1;
 		totalUserScore += newScore;
 		this.rating = calculateRating();
 	}
 
+	/**
+	 * 
+	 * @param rating
+	 */
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public double calculateRating() {
 		double calculatedRating;
 		if (maxUserScore > 0) {
