@@ -1,10 +1,55 @@
 import java.lang.Math; // Import for Math.sqrt() method
 
-public class CorrelationAgent {
+public class CorrelationAgent
+{
+	int feedbackScore;
+	int feedbackCount;
+	final int INITIAL_FEEDBACK_SCORE = 0;
+	final int INITIAL_FEEDBACK_COUNT = 0;
+	
 	/**
 	 * Default constructor
 	 */
-	public CorrelationAgent() {}
+	public CorrelationAgent() {
+		this.setFeedbackScore(INITIAL_FEEDBACK_SCORE);
+	}
+	
+	public void setFeedbackScore(int i) {
+		this.feedbackScore = i;
+	}
+	
+	public int getFeedbackScore() {
+		return this.feedbackScore;
+	}
+	public void incrementFeedbackScore() {
+		this.setFeedbackScore(this.getFeedbackScore()+1);
+	}
+	
+	public void setFeedbackCount(int i) {
+		this.feedbackCount = i;
+	}
+	
+	public int getFeedbackCount() {
+		return this.feedbackCount;
+	}
+	
+	public void incrementFeedbackCount() {
+		this.setFeedbackCount(this.getFeedbackCount()+1);
+	}
+	
+	public void receiveFeedback(boolean b) {
+		if (b == true) {
+			incrementFeedbackScore();
+		}
+		incrementFeedbackCount();
+	}
+	
+	public double getFeedbackAveragePercent() {
+		if(this.getFeedbackCount() == 0) {
+			return 0.0;
+		}
+		return 100 * (double)this.getFeedbackScore() / (double)this.getFeedbackCount();
+	}
 	
 	/**
 	 * 

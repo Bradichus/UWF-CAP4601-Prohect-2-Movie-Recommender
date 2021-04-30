@@ -8,8 +8,8 @@ class testCorrelationAgent {
 
 	/**
 	 * @brief User-to-user collaborative filtering
-	 * Will recommend the highest rated movie from User 2
-	 *  which has not been watched by User 1
+	 * Will recommend the highest rated movie from User 2 (most similar)
+	 *  which has not been watched by User 1 (Movie 12)
 	 *  
 	 * @param X's represent no rating provided for a movie
 	 * @param Y indicates the move that should be recommended
@@ -21,8 +21,6 @@ class testCorrelationAgent {
 	 * [ 97 65 xx 10 xx 95 31 23 xx 44 xx xx 17 42 68 ] User 4
 	 * [ 57 23 xx 11 60 17 xx 01 43 11 25 99 xx xx 18 ] User 5
 	 * 
-	 * User 2 is the most similar
-	 * Movie 12 should be the one recommended
 	 * @throws FileNotFoundException 
 	 */
 	@Test
@@ -57,7 +55,7 @@ class testCorrelationAgent {
 		 * Movie 7 should be the one recommended
 		 */
 	@Test
-	void testItemToItemRecommendationWithOneUser() throws FileNotFoundException {
+	void testItemToItemRecommendation() throws FileNotFoundException {
 		CorrelationAgent myAgent = new CorrelationAgent();
 		MovieDatabase imdb = new MovieDatabase();
 		UserDatabase userDB = new UserDatabase();

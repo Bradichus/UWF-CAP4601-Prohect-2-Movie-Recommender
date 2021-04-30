@@ -90,13 +90,54 @@ public class Menu {
 				break;
 			case 5:
 				RecommendMovieToUser(scnr);
+				isRecommendationGood(scnr);
 				break;
 			case 6:
 				quit = true;
 			}
 		} while(!quit);
+		printFeedbackReport();
 		System.out.println("\n==========    END     ==========");
 		scnr.close();
+	}
+	
+	/**
+	 * 
+	 */
+	public void printFeedbackReport() {
+		System.out.println("\n==========  FEEDBACK  ==========");
+		System.out.println("The feedback report for Movie Recommender was as follows: ");
+		System.out.println("Positive recommendations: "+ myAgent.getFeedbackScore());
+		System.out.println("Negative recommendations: "+ (myAgent.getFeedbackCount() - myAgent.getFeedbackScore()));
+		System.out.println("Total recommendations: "+ myAgent.getFeedbackCount());
+		System.out.print("Percent correct recommendations: ");
+		System.out.printf("%.2f", myAgent.getFeedbackAveragePercent());
+	}
+	
+	/**
+	 * 
+	 * @param s
+	 */
+	public void isRecommendationGood(Scanner s) {
+		boolean feedback;
+		String answer;
+		
+		System.out.println("Do you like this movie recommendation, yes or no?");
+		System.out.print("Enter y/n: ");
+		answer = s.next();
+		System.out.println("");
+		if(answer.contains("y") || answer.contains("Y"))
+		{
+			System.out.println("Positive feedback received");
+			feedback = true;
+		}
+		else
+		{
+			System.out.println("Negative feedback received");
+			feedback = false;
+		}
+		System.out.println("");
+		myAgent.receiveFeedback(feedback);
 	}
 	
 	/**
