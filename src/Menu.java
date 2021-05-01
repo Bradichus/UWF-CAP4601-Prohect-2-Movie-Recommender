@@ -10,8 +10,7 @@
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Menu
-{
+public class Menu {
 	MovieDatabase movies;
 	UserDatabase users;
 	CorrelationAgent myAgent = new CorrelationAgent();
@@ -21,8 +20,7 @@ public class Menu
 	 * @param args no current args parsed
 	 * @throws FileNotFoundException 
 	 */
-	public static void main (String args[]) throws FileNotFoundException
-	{
+	public static void main (String args[]) throws FileNotFoundException {
 		Menu myRecommender = new Menu();
 	}
 	
@@ -31,33 +29,26 @@ public class Menu
 	 * Calls MainMenu which is the driver for this movie recommender
 	 * @throws FileNotFoundException if the UserList.txt or MovieList.txt is not found
 	 */
-	Menu () throws FileNotFoundException
-	{
-		if (LoadMovieDatabase() && LoadUserDatabase())
-		{
+	Menu () throws FileNotFoundException {
+		if (LoadMovieDatabase() && LoadUserDatabase()) {
 			MainMenu();
 		}
-		else
-		{
+		else {
 			System.out.println("Please create a MovieList.txt and/or UserList.txt file");
 		}
 	}
 	
 	/**
 	 * Creates the MovieDatabase object which reads in the data from file by default
-	 * 
 	 * @return true or false if the Movie database was successfully loaded or not
 	 */
 	boolean LoadMovieDatabase () {
-		try
-		{
+		try {
 			movies = new MovieDatabase();
 		}
-		catch (FileNotFoundException e)
-		{
+		catch (FileNotFoundException e) {
 			System.out.println("MovieList.txt not found");
 			e.printStackTrace();
-			
 			return false;
 		}
 		
@@ -66,19 +57,15 @@ public class Menu
 	
 	/**
 	 * Creates the UserDatabase object which reads in the data from file by default
-	 * 
 	 * @return true or false if the User database was successfully loaded or not
 	 */
 	boolean LoadUserDatabase () {
-		try	
-		{
+		try	{
 			users = new UserDatabase();
 		}
-		catch (FileNotFoundException e)
-		{
+		catch (FileNotFoundException e) {
 			System.out.println("UserList.txt not found");
 			e.printStackTrace();
-			
 			return false;
 		}
 		
@@ -89,8 +76,7 @@ public class Menu
 	 * Main driver for Movie Recommender
 	 * Contains the main logic for displaying menu options, recording choices, and calling appropriate functions
 	 */
-	void MainMenu ()
-	{
+	void MainMenu () {
 		Scanner scnr = new Scanner(System.in);
 		boolean quit = false;
 		int option;
@@ -98,17 +84,14 @@ public class Menu
 		System.out.println("  -=| MOVIE RECOMMENDER |=-  ");
 		System.out.println("");
 		
-		do
-		{
-			do
-			{
+		do {
+			do {
 				MenuOptions();
 				option = scnr.nextInt();
 				scnr.nextLine();
 			} while (!IsValidOption(option));
 			
-			switch (option)
-			{
+			switch (option) {
 			case 1:
 				PrintMovieDatabase();
 				break;
@@ -138,8 +121,7 @@ public class Menu
 	/**
 	 * Prints Feedback from CorrelationAgent on the accuracy of the movies recommended 
 	 */
-	void printFeedbackReport ()
-	{
+	void printFeedbackReport () {
 		System.out.println("\n==========  FEEDBACK  ==========");
 		System.out.println("The feedback report for Movie Recommender was as follows: ");
 		System.out.println("Positive recommendations: "+myAgent.getFeedbackScore());
@@ -152,11 +134,9 @@ public class Menu
 	/**
 	 * Asks user for feedback on if the movie recommended was a good one
 	 * Passes feedback to CorrelationAgent to include in feddback report at end
-	 * 
 	 * @param s is a Scanner object to record user input
 	 */
-	void isRecommendationGood (Scanner s)
-	{
+	void isRecommendationGood (Scanner s) {
 		boolean feedback;
 		String answer;
 		
@@ -165,13 +145,11 @@ public class Menu
 		answer = s.next();
 		System.out.println("");
 		
-		if(answer.contains("y") || answer.contains("Y"))
-		{
+		if(answer.contains("y") || answer.contains("Y")) {
 			System.out.println("Positive feedback received\n");
 			feedback = true;
 		}
-		else
-		{
+		else {
 			System.out.println("Negative feedback received\n");
 			feedback = false;
 		}
@@ -182,22 +160,18 @@ public class Menu
 	/**
 	 * Asks the user for a name and validates against the database
 	 * Calls a SetARating function off of the selected user to record a new rating
-	 * 
 	 * @param s  is a Scanner object to record user input
 	 */
-	void AddRatingToUser (Scanner s)
-	{
+	void AddRatingToUser (Scanner s) {
 		String name;
 		int index;
 		
 		System.out.println("\n========== Add Rating ==========");
 		
-		do
-		{
+		do {
 			System.out.println(users.toString());
 			System.out.print("\nWhich user do you want to add a rating to: ");
 			name = s.nextLine();
-			name = name.strip();
 			index = users.isValidUser(name);
 		} while (index < 0);
 		
@@ -206,11 +180,9 @@ public class Menu
 	
 	/**
 	 * Asks the user for a name and create a new user in the database
-	 * 
 	 * @param s is a Scanner object to record user input
 	 */
-	void CreateUser (Scanner s)
-	{
+	void CreateUser (Scanner s) {
 		System.out.print("\nWhat is the user's name: ");
 		String name = s.nextLine();
 		users.AddUser(new User(name));
@@ -220,22 +192,18 @@ public class Menu
 	/**
 	 * Asks for a user name and checks if valid from the database
 	 * Calls CorrelationAgent to find the recommended movie and prints to the screen
-	 * 
 	 * @param s is a Scanner object to record user input
 	 */
-	void RecommendMovieToUser (Scanner s)
-	{
+	void RecommendMovieToUser (Scanner s) {
 		String name;
 		int index;
 		
 		System.out.println("\n======== Movie Recommend =======");
 		
-		do
-		{
+		do {
 			System.out.println(users.toString());
 			System.out.print("\nWhich user do you want to recommend a movie to: ");
 			name = s.nextLine();
-			name = name.strip();
 			index = users.isValidUser(name);
 		} while (index < 0);
 		
@@ -246,38 +214,29 @@ public class Menu
 	/**
 	 * Prints the movie database and their details
 	 */
-	void PrintMovieDatabase ()
-	{
+	void PrintMovieDatabase () {
 		System.out.println("\n========== Movie List ==========");
-		
-		for (int i=0; i < movies.getMovies().size(); i++)
-		{
+		for (int i=0; i < movies.getMovies().size(); i++) {
 			System.out.println(""+ (i+1)+") "+movies.getMovies().get(i).toString());
 		}
-		
 		System.out.println("");
 	}
 	
 	/**
 	 * Prints the user database and their ratings
 	 */
-	void PrintUserDatabase ()
-	{
+	void PrintUserDatabase () {
 		System.out.println("\n========== Users List ==========");	
-		
-		for (int i=0; i < users.GetUsers().size(); i++)
-		{
+		for (int i=0; i < users.GetUsers().size(); i++) {
 			System.out.println(""+(i+1)+") "+users.GetUsers().get(i).toString());
 		}
-		
 		System.out.println("");
 	}
 	
 	/**
 	 * Prints all of the current menu options to the screen
 	 */
-	void MenuOptions ()
-	{
+	void MenuOptions () {
 		System.out.println("========== Main  Menu ==========");
 		System.out.println("1) View the Movie Database");
 		System.out.println("2) View the User Database");
@@ -291,16 +250,12 @@ public class Menu
 	
 	/**
 	 * Evaluates if the menu choice was within the selection list
-	 * 
 	 * @return true or false based on if was within range or not respectively 
 	 */
-	boolean IsValidOption (int x)
-	{
-		if(0 < x && x < 7)
-		{
+	boolean IsValidOption (int x) {
+		if(0 < x && x < 7) {
 			return true;
 		}
-		
 		System.out.println("~> Enter a valid number from the list\n");
 		
 		return false;
