@@ -1,6 +1,6 @@
 /**
  * @author Benjamin Hendrix and Brandon Benthal 
- * @class COP4601 Intro to AI
+ * @class CAP4601 Intro to AI
  * @date 01 May 2021
  * 
  * Menu acts as the main driver for the program.

@@ -1,6 +1,6 @@
 /**
  * @author Benjamin Hendrix
- * @class COP4601 Intro to AI
+ * @class CAP4601 Intro to AI
  * @date 01 May 2021
  * 
  * User class manages the name and ratings of each user for each movie
