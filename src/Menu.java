@@ -79,8 +79,10 @@ public class Menu
 		Scanner scnr = new Scanner(System.in);
 		boolean quit = false;
 		int option;
+		
 		System.out.println("  -=| MOVIE RECOMMENDER |=-  ");
 		System.out.println("");
+		
 		do
 		{
 			do
@@ -111,6 +113,7 @@ public class Menu
 				quit = true;
 			}
 		} while(!quit);
+		
 		printFeedbackReport();
 		System.out.println("\n==========    END     ==========");
 		scnr.close();
@@ -140,10 +143,12 @@ public class Menu
 	{
 		boolean feedback;
 		String answer;
+		
 		System.out.println("Do you like this movie recommendation, yes or no?");
 		System.out.print("Enter y/n: ");
 		answer = s.next();
 		System.out.println("");
+		
 		if(answer.contains("y") || answer.contains("Y"))
 		{
 			System.out.println("Positive feedback received\n");
@@ -154,6 +159,7 @@ public class Menu
 			System.out.println("Negative feedback received\n");
 			feedback = false;
 		}
+		
 		myAgent.receiveFeedback(feedback);
 	}
 	
@@ -167,7 +173,9 @@ public class Menu
 	{
 		String name;
 		int index;
+		
 		System.out.println("\n========== Add Rating ==========");
+		
 		do
 		{
 			System.out.println(users.toString());
@@ -176,6 +184,7 @@ public class Menu
 			name = name.strip();
 			index = users.isValidUser(name);
 		} while(index < 0);
+		
 		users.GetUsers().get(index).SetARating(s, movies);
 	}
 	
@@ -202,7 +211,9 @@ public class Menu
 	{
 		String name;
 		int index;
+		
 		System.out.println("\n======== Movie Recommend =======");
+		
 		do
 		{
 			System.out.println(users.toString());
@@ -211,20 +222,23 @@ public class Menu
 			name = name.strip();
 			index = users.isValidUser(name);
 		} while(index < 0);
+		
 		System.out.println("Recommendation: "+ myAgent.RecommendMovieToUser(users.GetUsers().get(index), users, movies, index));
 		System.out.println("");
 	}
 	
 	/**
-	 * Prints the movie database and trheir details
+	 * Prints the movie database and their details
 	 */
 	public void PrintMovieDatabase()
 	{
 		System.out.println("\n========== Movie List ==========");
+		
 		for(int i=0; i < movies.getMovies().size(); i++)
 		{
 			System.out.println(""+ (i+1)+") "+movies.getMovies().get(i).toString());
 		}
+		
 		System.out.println("");
 	}
 	
@@ -234,10 +248,12 @@ public class Menu
 	public void PrintUserDatabase()
 	{
 		System.out.println("\n========== Users List ==========");	
+		
 		for(int i=0; i < users.GetUsers().size(); i++)
 		{
 			System.out.println(""+(i+1)+") "+users.GetUsers().get(i).toString());
 		}
+		
 		System.out.println("");
 	}
 	
@@ -269,6 +285,7 @@ public class Menu
 			return true;
 		}
 		System.out.println("~> Enter a valid number from the list\n");
+		
 		return false;
 	}
 }

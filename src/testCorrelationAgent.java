@@ -28,7 +28,6 @@ class testCorrelationAgent {
 		CorrelationAgent myAgent = new CorrelationAgent();
 		MovieDatabase imdb = new MovieDatabase();
 		UserDatabase userDB = new UserDatabase();
-		
 		assertEquals(imdb.getMovies().get(12).getName(), myAgent.RecommendMovieToUser(userDB.GetUsers().get(0), userDB, imdb, 0));
 	}
 	
@@ -59,15 +58,12 @@ class testCorrelationAgent {
 		CorrelationAgent myAgent = new CorrelationAgent();
 		MovieDatabase imdb = new MovieDatabase();
 		UserDatabase userDB = new UserDatabase();
-		
-		// Matching user 1 and user 2's ratings 
-		userDB.GetUsers().get(0).SetRatings(userDB.GetUsers().get(1).ratings);
-		
-		//Removing a negative rating to see if it will recommend a disliked movie
-		int newRatings[] = userDB.GetUsers().get(0).ratings;
+		userDB.GetUsers().get(0).SetRatings(userDB.GetUsers().get(1).ratings); // Matching user 1 and user 2's ratings
+		int newRatings[] = userDB.GetUsers().get(0).ratings; //Removing a negative rating to test if it will give a bad recommendation (should not)
 		newRatings[3] = 0;
 		userDB.GetUsers().get(0).SetRatings(newRatings);
-
 		assertEquals(imdb.getMovies().get(7).getName(), myAgent.RecommendMovieToUser(userDB.GetUsers().get(0), userDB, imdb, 0));
 	}
+	
+	
 }
