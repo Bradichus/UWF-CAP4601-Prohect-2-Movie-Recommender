@@ -1,18 +1,17 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
 /**
- * Project 2 Movie Recommender
- * CAP4601 Intro to AI
- * 
  * @author Benjamin Hendrix
+ * @class COP4601 Intro to AI
+ * @date 01 May 2021
  * 
  * User class manages the name and ratings of each user for each movie
- *
  */
-public class User {
-	static final String DEFAULT_NAME = "<NO_NAME>";
+
+import java.util.Scanner;
+
+public class User
+{
 	String name;
+	static final String DEFAULT_NAME = "<NO_NAME>";
 	static final int DEFAULT_NUM_MOVIES = 15;
 	int[] ratings = new int [DEFAULT_NUM_MOVIES];
 	int[] avgRatingsMinusMean = new int [DEFAULT_NUM_MOVIES];
@@ -20,72 +19,86 @@ public class User {
 	
 	/**
 	 * Default constructor (chained constructor)
+	 * 
 	 * @see Parameterized constructor with one argument of String name 
 	 */
-	public User()
+	public User ()
 	{
 		this(DEFAULT_NAME);
 	}
 	
 	/**
 	 * One parameterized constructor
-	 * @param name
-	 * @param ratings is initialized to 0 as a stub
+	 * 
+	 * @param name is the name of the user to be set
+	 * @param ratings is initialized to 0 as a default
 	 */
-	public User(String name)
+	User (String name)
 	{
-		this.SetName(name);
-		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
+		SetName(name);
+		
+		for (int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
-			this.ratings[i] = 0;
+			ratings[i] = 0;
 		}
+		
 		CheckHasRatedMovie();
 		CalculateAvgRatingsMinusMean();
 	}
 	
 	/**
 	 * Two parameterized constructor
-	 * @param name is passed as an argument to SetName 
-	 * @param ratings is passed as an argument to initialize the ratings
+	 * 
+	 * @param name is the name of the user to be set 
+	 * @param newRatings array is passed as an argument to set the ratings
 	 */
-	public User(String name, int[] ratings)
+	User (String name, int[] newRatings)
 	{
-		this.SetName(name);
-		for(int i=0; i < DEFAULT_NUM_MOVIES; ++i)
+		SetName(name);
+		
+		for (int i=0; i < DEFAULT_NUM_MOVIES; ++i)
 		{
-			this.ratings[i] = ratings[i];
+			ratings[i] = newRatings[i];
 		}
+		
 		CheckHasRatedMovie();
 		CalculateAvgRatingsMinusMean();
 	}
 	
 	/**
+	 * Formats the output of a string passed to be a minimum length
+	 * Used in comjunction with toString 
 	 * 
-	 * @param string
-	 * @param length
-	 * @return
+	 * @param string any string that needs a minimum length for output formatting
+	 * @param length the minimum length the string should be
+	 * @return the formatted string
 	 */
-	public String fixedLengthString(String string, int length)
+	String fixedLengthString (String string, int length)
 	{
 	    return String.format("%1$"+length+ "s", string);
 	}
 	
 	/**
+	 * Collects the name of the user and their ratings to be return
 	 * 
-	 * @return
+	 * @return the well formatted user information in a string
 	 */
-	public String toString()
+	@Override
+	public String toString ()
 	{
 		String to_string = "";
-		to_string += fixedLengthString(GetName(), 6);
-		to_string += " - ";
-		for(int i=0; i < GetRatings().length; i++)
+		to_string += fixedLengthString(GetName(), 6) + " - ";
+		
+		for (int i=0; i < GetRatings().length; i++)
 		{
-			if(GetRatings()[i] < 10) {
+			if (GetRatings()[i] < 10)
+			{
 				to_string += "0";
 			}
+			
 			to_string += GetRatings()[i];
-			if(i != GetRatings().length - 1)
+			
+			if (i != GetRatings().length - 1)
 			{
 				to_string += ", ";
 			}
@@ -94,85 +107,100 @@ public class User {
 		return to_string;
 	}
 	
-	public void SetARating(Scanner s, MovieDatabase imdb)
+	/**
+	 * Prompts user for a movie title to set a rating for
+	 * Validates the movie title occurs in the database
+	 * Prompts the user for the new rating
+	 * Validates the rating is valid
+	 * Sets the rating for the user
+	 * 
+	 * @param s a Scanner object to parse user input
+	 * @param imdb the current MovieDatabase
+	 */
+	void SetARating (Scanner s, MovieDatabase imdb)
 	{
 		String title;
-		int index;
+		int index, rating;
+		
 		do
 		{
 			System.out.println("Which movie would you like to rate?");
 			System.out.println(imdb.toString());
 			title = s.nextLine();
 			index = imdb.isValidMovie(title);
-		} while(index < 0);
+		} while (index < 0);
 		
-		int rating;
 		do
 		{
 			System.out.print("What is your rating for "+imdb.getMovies().get(index).getName()+": ");
 			rating = s.nextInt();
 			s.nextLine();
-			if(!(0 < rating && rating < 100))
+			
+			if (!(0 < rating && rating < 100))
 			{
 				System.out.println("\nNot a valid rating, please rate from 0 to 100");
 			}
-		} while(!(0 <= rating && rating <= 100));
+		} while (!(0 <= rating && rating <= 100));
 		
 		ratings[index] = rating;
 		System.out.println("");
 	}
 	
 	/**
-	 * 
+	 * Gathers the user's ratings, averages them, and minuses the mean from each rating
+	 * Does not factor in non rated movies i.e. rating 0
+	 * Stores the caluated the results for each movie in an array for the user
 	 */
-	public void CalculateAvgRatingsMinusMean()
+	void CalculateAvgRatingsMinusMean ()
 	{
-		int average = this.GetAverageRatings();
+		int average = GetAverageRatings();
 		
-		for(int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
+		for (int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
 		{
-			if(this.ratings[i] != 0)
+			if (ratings[i] != 0)
 			{
-				this.avgRatingsMinusMean[i] = this.ratings[i] - average;
+				avgRatingsMinusMean[i] = ratings[i] - average;
 			}
 			else
 			{
-				this.avgRatingsMinusMean[i] = 0;
+				avgRatingsMinusMean[i] = 0;
 			}
 		}
 	}
 
 	/**
-	 * 
-	 * @param loc
-	 * @param rating
+	 * Passes the location and the new rating to be stored in the user's rating array
+	 * @param loc the index in the movie ratings array to set the new rating
+	 * @param newRating the rating to be assigned in the ratings array
 	 */
-	public void AddRatingToMovie(int loc, int rating)
+	void AddRatingToMovie (int loc, int newRating)
 	{
-		this.ratings[loc] = rating;
+		ratings[loc] = newRating;
 		CheckHasRatedMovie();
 		CalculateAvgRatingsMinusMean();
 	}
 	
 	/**
+	 * Calculates the average of the user's rated movies
+	 * Does not account for non-rated mollvies i.e. rated 0
 	 * 
-	 * @return
+	 * @return the calculated average of the users' ratings
 	 */
-	public int GetAverageRatings()
+	int GetAverageRatings ()
 	{
 		int sum = 0;
 		int count = 0;
 		
-		for(int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
+		for (int i=0; i < User.DEFAULT_NUM_MOVIES; i++)
 		{
-			if(this.ratings[i] != 0.0)
+			if (ratings[i] != 0.0)
 			{
-				sum += this.ratings[i];
+				sum += ratings[i];
 				count++;
 			}
 		}
 		
-		if(count == 0)
+		if (count == 0)
 		{
 			return 0;
 		}
@@ -181,78 +209,84 @@ public class User {
 	}
 	
 	/**
-	 * Mutator
-	 * @param name is the name of the user
+	 * Mutator, sets the name of the user
+	 * 
+	 * @param name is the new name of the user
 	 */
-	public void SetName(String name)
+	void SetName (String name)
 	{
 		this.name = name;
 	}
 	
 	/**
-	 * Accessor
+	 * Accessor, get the name of the user
 	 * @return the name of the user
 	 */
-	public String GetName()
+	String GetName ()
 	{
 		return this.name;
 	}
 	
 	/**
-	 * Mutator
+	 * Mutator, sets the array of ratings for a user
 	 * @param ratings is the values rated for each movie
 	 */
-	public void SetRatings(int[] ratings)
+	void SetRatings (int[] ratings)
 	{
 		this.ratings = ratings;
 		CheckHasRatedMovie();
 	}
 	
 	/**
-	 * 
+	 * Checks if a user has rated a movie or not
+	 * A non-rated movie has a score of 0
+	 * Sets a true value in an array if the user has rated the movie
 	 */
-	public void CheckHasRatedMovie()
+	void CheckHasRatedMovie ()
 	{
-		for(int i=0; i<DEFAULT_NUM_MOVIES; i++)
+		for (int i=0; i<DEFAULT_NUM_MOVIES; i++)
 		{
-			this.hasRatedMovie[i] = (ratings[i] != 0) ? true : false;
+			hasRatedMovie[i] = (ratings[i] != 0) ? true : false;
 		}
 	}
 	
 	/**
-	 * 
+	 * Parses through the movies a user has rated and prints them in a formatted manner
 	 */
-	public void PrintRatings()
+	void PrintRatings ()
 	{
-		for(int i=0; i< DEFAULT_NUM_MOVIES; i++)
+		for (int i=0; i< DEFAULT_NUM_MOVIES; i++)
 		{
 			System.out.println("Movie "+i+" ratings is "+ratings[i]);
 		}
 	}
 	
 	/**
-	 * Accessor
+	 * Accessor, gets the ratings array for a user
+	 * 
 	 * @return the ratings array which is the values rated for each movie
 	 */
-	public int[] GetRatings()
+	int[] GetRatings ()
 	{
 		return this.ratings;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Accessor, gets the array which stores a calculated average of the user's ratings minus the mean 
+	 *  
+	 * @return the array which stores the user's average ratings minus the mean of their ratings
 	 */
-	public int[] GetAvgRatingsMinusMean()
+	int[] GetAvgRatingsMinusMean ()
 	{
 		return this.avgRatingsMinusMean;
 	}
 	
 	/**
+	 * Accessor, gets the array stored for the user whcih houses whether or not they have rated a movie
 	 * 
-	 * @return
+	 * @return the array whcih stores the whether a user has rated a movie or not
 	 */
-	public boolean[] GetHasRatedMovie()
+	boolean[] GetHasRatedMovie ()
 	{
 		return this.hasRatedMovie;
 	}
