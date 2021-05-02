@@ -1,5 +1,5 @@
 /**
- * @author Benjamin Hendrix
+ * @author Benjamin Hendrix & Brandon Benthal
  * @class CAP4601 Intro to AI
  * @date 01 May 2021
  * 
@@ -74,6 +74,11 @@ public class UserDatabase {
 		return index;
 	}
 	
-	ArrayList<User> GetUsers() {return Users;}
-	void AddUser(User u) {Users.add(u);}
+	ArrayList<User> GetUsers () {
+		return Users;
+	}
+	
+	void AddUser (User u) {
+		Users.add(u);
+	}
 }

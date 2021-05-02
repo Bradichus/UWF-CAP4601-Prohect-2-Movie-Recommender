@@ -1,5 +1,5 @@
 /**
- * @author Benjamin Hendrix
+ * @author Benjamin Hendrix & Brandon Benthal
  * @class CAP4601 Intro to AI
  * @date 01 May 2021
  * 

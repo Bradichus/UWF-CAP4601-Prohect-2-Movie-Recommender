@@ -1,3 +1,11 @@
+/**
+ * @author Brandon Benthal & Benjamin Hendrix
+ * @class CAP4601 Intro to AI
+ * @date 01 May 2021
+ * 
+ * CorrelationAgent calculates movie recommendations based on User-to-User collaborative filtering
+ */
+
 public class Movie {
 	String name;
 	String[] tags = new String[5];
@@ -10,11 +18,7 @@ public class Movie {
 	final int MAX_RATING = 5;
 	double rating;
 
-	/**
-	 * 
-	 */
-	public Movie()
-	{
+	Movie () {
 		name = "";
 		for (int i = 0; i < MAX_TAGS; i++) {
 			tags[i] = "";
@@ -27,12 +31,7 @@ public class Movie {
 		rating = 0;
 	}
 
-	/**
-	 * 
-	 * @param name
-	 */
-	public Movie(String name)
-	{
+	Movie (String name) {
 		this.name = name;
 		for (int i = 0; i < MAX_TAGS; i++) {
 			tags[i] = "";
@@ -45,15 +44,7 @@ public class Movie {
 		rating = 0;
 	}
 
-	/**
-	 * 
-	 * @param name
-	 * @param numViews
-	 * @param numReviews
-	 * @param totalUserScore
-	 */
-	public Movie(String name, int numViews, int numReviews, int totalUserScore)
-	{
+	Movie (String name, int numViews, int numReviews, int totalUserScore) {
 		this.name = name;
 		for (int i = 0; i < MAX_TAGS; i++) {
 			tags[i] = "";
@@ -66,17 +57,7 @@ public class Movie {
 		rating = calculateRating();
 	}
 
-	/**
-	 * 
-	 * @param name
-	 * @param numViews
-	 * @param numReviews
-	 * @param totalUserScore
-	 * @param numTags
-	 * @param tags
-	 */
-	public Movie(String name, int numViews, int numReviews, int totalUserScore, int numTags,  String[] tags)
-	{
+	Movie (String name, int numViews, int numReviews, int totalUserScore, int numTags,  String[] tags) {
 		this.name = name;
 		this.numTags = 0;
 		for (int i = 0; i < numTags; i++) {
@@ -93,17 +74,7 @@ public class Movie {
 		rating = calculateRating();
 	}
 
-	/**
-	 * 
-	 * @param name
-	 * @param numViews
-	 * @param numReviews
-	 * @param rating
-	 * @param numTags
-	 * @param tags
-	 */
-	public Movie(String name, int numViews, int numReviews, double rating, int numTags, String[] tags)
-	{
+	Movie (String name, int numViews, int numReviews, double rating, int numTags, String[] tags) {
 		this.name = name;
 		this.numTags = 0;
 		for (int i = 0; i < numTags; i++) {
@@ -119,10 +90,7 @@ public class Movie {
 		this.rating = rating;
 	}
 	
-	/**
-	 * 
-	 */
-	public String toString() {
+	public String toString () {
 		String to_string = "";
 		to_string += getName();
 		to_string += " - Avg Rating: ";
@@ -131,13 +99,7 @@ public class Movie {
 		return to_string;
 	}
 
-	/**
-	 * 
-	 * @param newTag
-	 * @return
-	 */
-	public boolean tag(String newTag)
-	{
+	boolean tag (String newTag){
 		boolean success = false;
 		boolean isNew = false;
 
@@ -156,14 +118,7 @@ public class Movie {
 		return success;
 	}
 
-	/**
-	 * 
-	 * @param oldTag
-	 * @param newTag
-	 * @return
-	 */
-	public boolean replaceTag(String oldTag, String newTag)
-	{
+	boolean replaceTag (String oldTag, String newTag) {
 		boolean success = false;
 		for (int i = 0; i < MAX_TAGS; i++) {
 			if (tags[i] == oldTag && !success)
@@ -173,14 +128,9 @@ public class Movie {
 		return success;
 	}
 
-	/**
-	 * 
-	 * @param oldTag
-	 * @return
-	 */
-	public boolean removeTag(String oldTag)
-	{
+	boolean removeTag(String oldTag) {
 		boolean success = false;
+		
 		for (int i = 0; i < MAX_TAGS; i++) {
 			if (tags[i] == oldTag && !success) {
 				for (int j = i; j < MAX_TAGS; j++)
@@ -197,29 +147,17 @@ public class Movie {
 		return success;
 	}
 
-	/**
-	 * 
-	 * @param newScore
-	 */
-	public void addReview(int newScore) {
+	void addReview (int newScore) {
 		numReviews += 1;
 		totalUserScore += newScore;
 		this.rating = calculateRating();
 	}
 
-	/**
-	 * 
-	 * @param rating
-	 */
-	public void setRating(double rating) {
+	void setRating (double rating) {
 		this.rating = rating;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public double calculateRating() {
+	double calculateRating () {
 		double calculatedRating;
 		if (maxUserScore > 0) {
 			calculatedRating = ( ( totalUserScore / maxUserScore ) * 100);
@@ -230,10 +168,27 @@ public class Movie {
 		return calculatedRating;
 	}
 
-	public String getName() {return name;};
-	public int getNumTags() {return numTags;};
-	public String[] getTags() {return tags;};
-	public int getViews() {return numViews;};
-	public int getNumReviews() {return numReviews;};
-	public double getRating() {return rating;};
+	String getName () {
+		return name;
+	}
+	
+	int getNumTags () {
+		return numTags;
+	}
+	
+	String[] getTags() {
+		return tags;
+	}
+	
+	int getViews () {
+		return numViews;
+	}
+	
+	int getNumReviews () {
+		return numReviews;
+	}
+	
+	double getRating () {
+		return rating;
+	}
 }

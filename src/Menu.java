@@ -25,7 +25,6 @@ public class Menu {
 	}
 	
 	/**
-	 * Default Constructor
 	 * Calls MainMenu which is the driver for this movie recommender
 	 * @throws FileNotFoundException if the UserList.txt or MovieList.txt is not found
 	 */

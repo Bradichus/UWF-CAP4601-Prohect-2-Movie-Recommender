@@ -1,3 +1,11 @@
+/**
+ * @author Brandon Benthal & Benjamin Hendrix
+ * @class CAP4601 Intro to AI
+ * @date 01 May 2021
+ * 
+ * User class manages the name and ratings of each user for each movie
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -16,7 +24,7 @@ public class MovieDatabase {
 
     ArrayList<Movie> Movies = new ArrayList<Movie>();
 
-    MovieDatabase() throws FileNotFoundException {
+    MovieDatabase () throws FileNotFoundException {
         File inputFile = new File("MovieList.txt");
         Scanner s = new Scanner(inputFile);
         s.useDelimiter(",|\\n|\\r");
@@ -27,8 +35,7 @@ public class MovieDatabase {
         }
 
         String next;
-        while(s.hasNext())
-        {
+        while(s.hasNext()) {
             next = s.next();
             if (next.isEmpty()) {
                 garbo = next;
@@ -49,36 +56,37 @@ public class MovieDatabase {
         } s.close();
     }
 
-    public String toString() {
+    public String toString () {
 		String to_string = "";
-		for(int i=0; i < Movies.size(); i++)
-		{
+		for (int i=0; i < Movies.size(); i++) {
 			to_string += Movies.get(i).getName();
-			if(i != Movies.size() - 1)
-			{
+			if (i != Movies.size() - 1) {
 				to_string +=", ";
 			}
 		}
 		return to_string;
 	}
     
-    public int isValidMovie(String name)
-	{
+    /**
+     * Determines whether the movie is within the Database
+     * @param name of the movie to be searched for
+     * @return the index of the move if found 
+     */
+    int isValidMovie (String name) {
 		int index = -1;
-		for(int i=0; i < Movies.size(); i++)
-		{
-			if(Movies.get(i).getName().equals(name))
-			{
+		
+		for (int i=0; i < Movies.size(); i++) {
+			if (Movies.get(i).getName().equals(name)) {
 				index = i;
 			}
 		}
-		if(index < 0)
-		{
+		if (index < 0) {
 			System.out.println("Could not find that movie");
 		}
 		return index;
 	}
     
-    ArrayList<Movie> getMovies() {return Movies;}
-
+    ArrayList<Movie> getMovies () {
+    	return Movies;
+    }
 }
