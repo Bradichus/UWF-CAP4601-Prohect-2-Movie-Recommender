@@ -51,15 +51,14 @@ class testUser
 	void testFullParameterizedConstructor()
 	{
 		final String name = "Jack";
-		final int numMovies = 10;
-		final int[] ratings = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+		final int numMovies = 15;
+		final int[] ratings = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 		
 		User user = new User(name, ratings);
 		
 		assertEquals(user.GetName(), name);
 		assertEquals(User.DEFAULT_NUM_MOVIES, numMovies);
-		for(int i=0; i < User.DEFAULT_NUM_MOVIES; ++i)
-		{
+		for(int i=0; i < User.DEFAULT_NUM_MOVIES; ++i) {
 			assertEquals(user.ratings[i], ratings[i]);
 		}
 	}
